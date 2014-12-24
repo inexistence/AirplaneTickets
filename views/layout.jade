@@ -1,0 +1,14 @@
+//-通用的框架的代码
+doctype
+html(lang="en")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport",content="width=device-width")
+		title #{title}
+		include ./includes/head
+		block css
+	body
+		include ./includes/header
+		block content
+		include ./includes/footer
+	block javascript

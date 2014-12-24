@@ -1,0 +1,79 @@
+//-首页
+//-继承通用模块
+extends ../layout
+
+block javascript
+	script(src="../js/index.js")
+	script(src="../js/select2.js")
+
+block css
+	link(href="../css/select2.css", rel="stylesheet")
+	link(href="../css/index.css", rel="stylesheet")
+
+block content
+	.jumbotron.bs-docs-header
+		.container
+			h1(style="color:#fff") 机票查询
+	.container
+		.row(style="padding:10px")
+			.col-xs-12.col-md-8
+				.row
+					.col-xs-6
+						.select2-container.select-box(id="startPlace",placeholder="出发地")
+					.col-xs-6
+						.select2-container.select-box(id="endPlace",placeholder="目的地")
+				.row
+					.col-xs-6
+						.select2-container.select-box(id="startTime",placeholder="出发时间")
+					.col-xs-6
+						.select2-container.select-box(id="endTime",placeholder="到达时间")
+			.col-xs-6.col-md-4
+				a.btn.btn-outline(id="search") 查询
+	.container
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th 航班信息
+						th 起飞时间
+						th 降落时间
+						th 总时长
+						th 出发地
+						th 目的地
+						//-th 录入时间
+						th 票价
+						th 税费
+						th 订票
+				tbody
+					each item in movies
+						tr(class="item-id-#{item._id}")
+							td: a(target="_blank", href="../admin/update/#{item._id}") 菲律宾航空 PR383 320(中)
+							td 5月6日 01:45
+							td 5月10日 01:45
+							td 10小时
+							//-td #{moment(item.meta.createdAt).format('MM/DD/YYYY')}
+							//-td: a(target="_blank", href="../movie/#{item._id}") 查看
+							td 北京
+							td 上海
+							td 702¥
+							td 690¥
+							//- td: a(target="_blank", href="../admin/update/#{item._id}") 修改
+							td: button.btn.btn-outline.del(type="button", data-id="#{item._id}") 订票
+		nav.text-center
+			ul.pagination
+				//- li.disabled
+				//- 	a(href="#") <<
+				//- li.disabled
+				//- 	a(href="#") <
+				li.active
+					a(href="#") 1
+				li
+					a(href="#") 2
+				li
+					a(href="#") 3
+				li
+					a(href="#") 4
+				li
+					a(href="#") >
+				li
+					a(href="#") >>

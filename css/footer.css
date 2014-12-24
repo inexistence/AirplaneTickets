@@ -1,0 +1,42 @@
+footer {
+	display: block;
+	/*position: absolute;
+	height: 60px;
+	bottom: 0;
+	left: */
+}
+.wrapper {
+	position: relative;
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto
+}
+.site-footer {
+	/*原本没有text-align,为了在中间才加的*/
+	text-align: center;
+	/*float:left;*/
+	border-top: 1px solid #e3e3e3;
+	color: #999999;
+	clear: both;
+	width: 100%;
+	padding: 10px 4%;
+	z-index: 100;
+	/*max-height: 20px*/
+	/*max-height:20px是后来加的,本来没有,去了footer变过高,原本的没有也没事啊,不知道什么情况*/
+}
+.copyright {
+	font-size: 0.8em;
+	padding: 10px 0
+}
+.copyright a:link, .copyright a:visited {
+	color: #686868
+}
+@media screen and (max-width: 500px) {
+
+	.site-footer {
+		text-align: center
+	}
+	.site-footer .copyright {
+		width: 100%
+	}
+}
