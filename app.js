@@ -24,78 +24,22 @@ console.log('airplaneTickets started on port '+port);
 app.get('/',function(req, res) {
 	res.render('index', {
 		title: 'airplaneTickets',
-		movies:[{
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+		flights:[{
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}, {
-			title: '机械战警',
-			_id: 1,
-			director: 'SB',
-			country: '美国',
-			year: 2014,
-			meta:{
-				createAt:'05/02/2014'
-			}
+			
 		}]
 	})
 });
