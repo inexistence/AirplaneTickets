@@ -5,10 +5,12 @@ extends ../layout
 block javascript
 	script(src="../js/index.js")
 	script(src="../js/select2.js")
+	script(src="../js/bootstrap-datepicker.js")
 
 block css
 	link(href="../css/select2.css", rel="stylesheet")
 	link(href="../css/index.css", rel="stylesheet")
+	link(href="../css/datepicker3.css", rel="stylesheet")
 
 block content
 	.jumbotron.bs-docs-header
@@ -24,9 +26,17 @@ block content
 						.select2-container.select-box(id="endPlace",placeholder="目的地")
 				.row
 					.col-xs-6
-						.select2-container.select-box(id="startTime",placeholder="出发时间")
+						//- .select2-container.select-box(id="startTime",placeholder="出发时间")
+						//- input#datetimepicker(type="text",placeholder="出发时间",data-date-format="yyyy-mm-dd")
+						#startDatepicker.input-group.input-append.date.datepicker(data-date="",data-date-format="yyyy-mm-dd")
+							input.span2.form-control(size="16",placeholder="出发时间",type="text",value="",readonly="")
+							span.add-on.input-group-addon
+								i.glyphicon.glyphicon-calendar
 					.col-xs-6
-						.select2-container.select-box(id="endTime",placeholder="到达时间")
+						#endDatepicker.input-group.input-append.date.datepicker(data-date="",data-date-format="yyyy-mm-dd")
+							input.span2.form-control(size="16",placeholder="到达时间",type="text",value="",readonly="")
+							span.add-on.input-group-addon
+								i.glyphicon.glyphicon-calendar
 			.col-xs-6.col-md-4
 				a.btn.btn-outline(id="search") 查询
 	.container
@@ -55,8 +65,8 @@ block content
 							//-td: a(target="_blank", href="../movie/#{item._id}") 查看
 							td 北京
 							td 上海
-							td 702¥
-							td 690¥
+							td ¥702
+							td ¥690
 							//- td: a(target="_blank", href="../admin/update/#{item._id}") 修改
 							td: button.btn.btn-outline.del(type="button", data-id="#{item._id}") 订票
 		nav.text-center
