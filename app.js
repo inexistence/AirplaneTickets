@@ -43,3 +43,10 @@ app.get('/',function(req, res) {
 		}]
 	})
 });
+
+app.get('/ticketDetail',function(req, res) {
+	res.render('ticketDetail', {
+		title: 'ticketDetail'
+	})
+});
+
