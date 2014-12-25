@@ -23,7 +23,7 @@ console.log('airplaneTickets started on port '+port);
 // index page
 app.get('/',function(req, res) {
 	res.render('index', {
-		title: 'airplaneTickets',
+		title: '机票查询',
 		flights:[{
 			
 		}, {
@@ -46,7 +46,7 @@ app.get('/',function(req, res) {
 
 app.get('/ticketDetail',function(req, res) {
 	res.render('ticketDetail', {
-		title: 'ticketDetail'
+		title: '机票详情'
 	})
 });
 
