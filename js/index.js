@@ -1,14 +1,19 @@
+
 $(document).ready(function(){
+	// $.fn.datetimepicker.dates['zh-CN'] = {
+	// 		days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+	// 		daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+	// 		daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
+	// 		months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+	// 		monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+	// 		today: "今天",
+	// 		suffix: [],
+	// 		meridiem: ["上午", "下午"]
+	// };
 	$("#startPlace").select2({
 		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
 	});
 	$("#endPlace").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
-	});
-	$("#startTime").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
-	});
-	$("#endTime").select2({
 		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
 	});
 	$("#search").click(function(){
@@ -31,4 +36,7 @@ $(document).ready(function(){
 		var endValue = $("#endPlace").select2("data").text;
 		alert("出发地:"+startValue+"  目的地:"+endValue);
 	});
+	
+	 $('#startDatepicker').datepicker();
+	 $('#endDatepicker').datepicker();
 });
