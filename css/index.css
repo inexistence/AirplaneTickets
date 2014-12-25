@@ -36,9 +36,10 @@
 }*/
 .select-box {
 	width:100%;
-	margin: 5px
+	margin-left: 5px;
+	margin-right: 5px;
+	/*margin-bottom: 10px;*/
 }
 
 .datepicker {
-	margin-left: 1px;
 }

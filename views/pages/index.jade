@@ -19,22 +19,24 @@ block content
 	.container
 		.row(style="padding:10px")
 			.col-xs-12.col-md-8
-				.row
+				.row.form-group
 					.col-xs-6
-						.select2-container.select-box(id="startPlace",placeholder="出发地")
+						//- label.col-sm-2.control-label 出发地
+						#startPlace.select2-container.select-box(placeholder="")
 					.col-xs-6
-						.select2-container.select-box(id="endPlace",placeholder="目的地")
-				.row
+						//- label.col-sm-2.control-label 目的地
+						#endPlace.select2-container.select-box(placeholder="")
+				.row.form-group
 					.col-xs-6
-						//- .select2-container.select-box(id="startTime",placeholder="出发时间")
-						//- input#datetimepicker(type="text",placeholder="出发时间",data-date-format="yyyy-mm-dd")
+						//- label.col-sm-2.control-label 出发时间
 						#startDatepicker.input-group.input-append.date.datepicker(data-date="",data-date-format="yyyy-mm-dd")
-							input.span2.form-control(size="16",placeholder="出发时间",type="text",value="",readonly="")
+							input.span2.form-control(size="16",placeholder="",type="text",value="",readonly="")
 							span.add-on.input-group-addon
 								i.glyphicon.glyphicon-calendar
 					.col-xs-6
+						//- label.col-sm-2.control-label 到达时间
 						#endDatepicker.input-group.input-append.date.datepicker(data-date="",data-date-format="yyyy-mm-dd")
-							input.span2.form-control(size="16",placeholder="到达时间",type="text",value="",readonly="")
+							input.span2.form-control(size="16",placeholder="",type="text",value="",readonly="")
 							span.add-on.input-group-addon
 								i.glyphicon.glyphicon-calendar
 			.col-xs-6.col-md-4
