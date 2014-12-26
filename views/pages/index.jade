@@ -59,27 +59,27 @@ block content
 						//- each item in flights
 						tr(ng-repeat="item in flights")
 							td.text-center
-								p {{item.company}}
-								p {{item.planeName}}
+								p {{item.attributes.company}}
+								p {{item.attributes.planeName}}
 							td.text-center
-								p {{item.flyDate}}
+								p {{item.attributes.flyDate}}
 								hr.half-rule
-								p {{item.arrDate}}
+								p {{item.attributes.arrDate}}
 							td.text-center
-								p {{item.flyTime}}
+								p {{item.attributes.flyTime}}
 							td.text-center
-								p {{item.flyAirport}}
+								p {{item.attributes.flyAirport}}
 								hr.half-rule
-								p {{item.arrAirport}}
+								p {{item.attributes.arrAirport}}
 							td.text-center
-								p {{item.fare}}
+								p {{item.attributes.fare}}
 							td.text-center
-								p {{item.tax}}
+								p {{item.attributes.tax}}
 							//- td.text-center
 								p 经济舱
 							td.text-center
 								a(target="_blank", href="/ticketDetail/3")
-									button.btn.btn-outline.del(type="button", data-id="{{item._id}}") 订票
+									button.btn.btn-outline.del(type="button", data-id="{{item.attributes._id}}") 订票
 			nav.text-center
 				ul.pagination
 					//- li.disabled

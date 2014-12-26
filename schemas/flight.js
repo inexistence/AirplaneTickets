@@ -40,7 +40,7 @@ FlightSchema.statics = {
 		.sort('meta.updateAt')
 		.exec(cb);
 	},
-	findById: function(id, cd) {
+	findById: function(id, cb) {
 		return this
 		.findOne({_id:id})
 		.exec(cb);

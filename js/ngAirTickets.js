@@ -99,8 +99,15 @@ function(win,Http,_) {
 		if(obj){
 			this.attributes = obj;
 		}
-		this.save = function(callback){
-			Http.post('/save',this,callback);
+		this.save = function(obj,callback){
+			if(obj){
+				this.attributes = obj;
+			}
+			Http.post('/save',this,{
+				success:function(){
+					
+				}
+			});
 		};
 		this.del = function(callback){
 

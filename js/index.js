@@ -42,9 +42,31 @@ function($scope, Util, Database) {
 	query.limit(perPageNum);
 	query.find({
 		success:function(results){
+			console.log(results);
 			$scope.flights = results;
 		},error:function(error){
+			console.log("error");
 			console.log(error);
 		}
 	});
+
+
+	// var flight = new Database.Object('Flight',{
+	// 	company:'菲律宾航空',
+	// 	planeName:'PR383 320(中)',
+	// 	flyDate:'5月6日 01:45',
+	// 	arrDate:'5月10日 01:45',
+	// 	flyTime:'约10小时',
+	// 	flyAirport:'广州白云国际机场',
+	// 	arrAirport:'北京国际机场',
+	// 	fare:'¥702',
+	// 	tax:'¥600',
+	// 	page:query.skipNum
+	// });
+
+	// flight.save(null,{
+	// 	success:function(obj){
+	// 		console.log(obj);
+	// 	}
+	// });
 }]);
