@@ -14,7 +14,7 @@ function(win){
 }]);
 //http函数
 app.factory('Http', ['$window','$http','_',
-function(win, $http,_) {
+function(win, $http, _) {
 	var Http = {};
 	
 	//simple http like ajax by angular http
