@@ -26,22 +26,21 @@ $(document).ready(function(){
 		//value
 		var endValue = $("#endPlace").select2("data").text;
 		alert("出发地:"+startValue+"  目的地:"+endValue);
-		$.ajax({
-			type: 'POST',
-			url: '/',
-			data: { page: "John", age: 18 },
-			success: function(data){
-				// alert("Data Loaded: " + data);
-			},
-			dataType: 'text'
-		});
 	});
 	
 	 $('#startDatepicker').datepicker();
 	 $('#endDatepicker').datepicker();
 });
 
-app.controller("indexCtrl", ['$scope', 'Util',
-function($scope, Util) {
-	console.log(Util);
+app.controller("indexCtrl", ['$scope', 'Util','Query',
+function($scope, Util, Query) {
+	var query = new Query('Flights');
+	query.equalTo('company','菲律宾航空');
+	query.find({
+		success:function(results){
+			console.log(results);
+		},error:function(error){
+			console.log(error);
+		}
+	});
 }]);
