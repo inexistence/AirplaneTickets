@@ -103,12 +103,14 @@ function(win,Http,_) {
 			if(obj){
 				this.attributes = obj;
 			}
-			Http.post('/save',this,{
-				success:function(){
-					
-				}
-			});
+			Http.post('/save',this,callback);
 		};
+		this.set = function(key,value){
+			this.attributes[key] = value;
+		}
+		this.get = function(key){
+			return this.attributes[key];
+		}
 		this.del = function(callback){
 
 		};
