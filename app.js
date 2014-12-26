@@ -12,8 +12,6 @@ mongoose.connect('mongodb://localhost/airpaneTickets');
 var Flight = require('./models/flight');
 
 
-
-
 //使前端post来的数据能从req.body中取得
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname));
@@ -123,6 +121,11 @@ app.post('/save',function(req,res){
 	obj = JSON.parse(obj);
 	var className = obj.className;
 	var Class = getClass(className);
+	if(Class===undefined){
+		res.status(404).send({error:'can not find Class '+className});
+		res.end();
+		return ;
+	}
 	var _obj;
 	if(obj.attributes._id !== undefined) {
 		Class.findById(obj.attributes._id, function(err,result){
