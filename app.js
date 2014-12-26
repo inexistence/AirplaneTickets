@@ -1,8 +1,12 @@
 var express = require('express');
+//使用mongoose作为数据库
+var mongoose = require('mongoose');
 var port = process.env.PORT || 80;
 //处理post中的data数据
 var bodyParser = require('body-parser');
 var app = express();
+//连接本地数据库airpaneTickets
+mongoose.connect('mongodb://localhost/airpaneTickets');
 
 //使前端post来的数据能从req.body中取得
 app.use(bodyParser.urlencoded({extended: false}));
