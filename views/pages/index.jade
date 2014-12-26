@@ -56,7 +56,7 @@ block content
 						th.text-center 订票
 				tbody
 					each item in flights
-						tr(class="item-id-#{item._id}")
+						tr
 							td.text-center
 								p 菲律宾航空
 								p PR383 320(中)
@@ -66,8 +66,6 @@ block content
 								p 5月10日 01:45
 							td.text-center
 								p 10小时
-							//-td #{moment(item.meta.createdAt).format('MM/DD/YYYY')}
-							//-td: a(target="_blank", href="../movie/#{item._id}") 查看
 							td.text-center
 								p 北京国际机场
 								hr.half-rule
@@ -79,7 +77,9 @@ block content
 							//- td.text-center
 								p 经济舱
 							//- td: a(target="_blank", href="../admin/update/#{item._id}") 修改
-							td.text-center: button.btn.btn-outline.del(type="button", data-id="#{item._id}") 订票
+							td.text-center
+								a(target="_blank", href="/ticketDetail/#{item._id}")
+									button.btn.btn-outline.del(type="button", data-id="#{item._id}") 订票
 		nav.text-center
 			ul.pagination
 				//- li.disabled
