@@ -25,24 +25,7 @@ console.log('airplaneTickets started on port '+port);
 // index page
 app.get('/',function(req, res) {
 	res.render('index', {
-		title: '机票查询',
-		flights:[{
-			
-		}, {
-			
-		}, {
-			
-		}, {
-			
-		}, {
-			
-		}, {
-			
-		}, {
-			
-		}, {
-			
-		}]
+		title: '机票查询'
 	});
 });
 
@@ -53,7 +36,42 @@ app.get('/ticketDetail/:id',function(req, res) {
 	})
 });
 
-app.post('/',function(req,res,next){
-	// console.log(req.body);
-	// res.end();
+app.get('/findData',function(req,res){
+	var query = req.query.data;
+	query = JSON.parse(query);
+	console.log(query);
+	var flights = [{
+		company:'菲律宾航空',
+		planeName:'PR383 320(中)',
+		flyDate:'5月6日 01:45',
+		arrDate:'5月10日 01:45',
+		flyTime:'约10小时',
+		flyAirport:'广州白云国际机场',
+		arrAirport:'北京国际机场',
+		fare:'¥702',
+		tax:'¥600',
+		ticketId:'123'
+	}];
+	res.send(flights);
+	res.end();
+});
+
+app.get('/getData',function(req,res){
+	var query = req.query.data;
+	query = JSON.parse(query);
+	console.log(query);
+	var flights = [{
+		company:'菲律宾航空',
+		planeName:'PR383 320(中)',
+		flyDate:'5月6日 01:45',
+		arrDate:'5月10日 01:45',
+		flyTime:'约10小时',
+		flyAirport:'广州白云国际机场',
+		arrAirport:'北京国际机场',
+		fare:'¥702',
+		tax:'¥600',
+		ticketId:'123'
+	}];
+	res.send(flights);
+	res.end();
 });
