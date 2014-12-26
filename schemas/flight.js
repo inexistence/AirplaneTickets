@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
+var BaseSchema = require('./baseschema');
+var _ = require('underscore');
 //航班数据结构
-var FlightSchema = new mongoose.Schema({
+var FlightSchema = new mongoose.Schema(_.extend({
 		company: String,
 		planeName:String,
 		flyDate:String,
@@ -9,47 +11,16 @@ var FlightSchema = new mongoose.Schema({
 		flyAirport:String,
 		arrAirport:String,
 		fare:String,
-		tax:String,
-		meta: {
-			createAt: {
-				type: Date,
-				default: Date.now()
-			},
-			updateAt: {
-				type: Date,
-				default: Date.now()
-			}
-		}
-});
+		tax:String
+},BaseSchema.data));
 
 //每次存储数据前都会调用这个方法
 FlightSchema.pre('save', function(next){
-	if(this.isNew) {
-		this.meta.createAt = this.meta.updateAt = Date.now();
-	} else {
-		this.meta.updateAt = Date.now();
-	}
+	BaseSchema.preSave(this);
 	next();
 });
 
 //静态函数
-FlightSchema.statics = {
-	fetch: function(q,cb) {
-		if(q.equal===undefined){
-			q.equal = {};
-		}
-		return this
-		.find(q.equal)
-		.skip(q.skipNum)
-		.limit(q.limitNum)
-		.sort('-meta.updateAt')
-		.exec(cb);
-	},
-	findById: function(id, cb) {
-		return this
-		.findOne({_id:id})
-		.exec(cb);
-	}
-};
+FlightSchema.statics = BaseSchema.statics;
 
 module.exports = FlightSchema;

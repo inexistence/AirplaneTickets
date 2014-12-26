@@ -35,7 +35,7 @@ $(document).ready(function(){
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
 	var page = 0;
-	var perPageNum = 1;
+	var perPageNum = 100;
 	var query = new Database.Query('Flight');
 	// query.equalTo('flyTime','约9小时');
 	query.skip(0);
@@ -44,6 +44,7 @@ function($scope, Util, Database) {
 		success:function(results){
 			console.log(results);
 			$scope.flights = results;
+			// results[0].delete();
 		},error:function(error){
 			console.log("error");
 			console.log(error);
