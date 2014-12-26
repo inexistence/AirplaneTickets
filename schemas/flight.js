@@ -34,9 +34,14 @@ FlightSchema.pre('save', function(next){
 
 //静态函数
 FlightSchema.statics = {
-	fetch: function(cb) {
+	fetch: function(q,cb) {
+		if(q.equal===undefined){
+			q.equal = {};
+		}
 		return this
-		.find({})
+		.find(q.equal)
+		.skip(q.skip)
+		.limit(q.limit)
 		.sort('meta.updateAt')
 		.exec(cb);
 	},

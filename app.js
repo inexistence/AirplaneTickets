@@ -61,7 +61,7 @@ app.get('/findData',function(req,res){
 		return ;
 	}
 
-	Class.fetch(function(err,results){
+	Class.fetch(query,function(err,results){
 		if(err){
 			res.status(404).send({error:err,object:results});
 			res.end();

@@ -13,8 +13,8 @@ function(win){
 	return win._;
 }]);
 //http函数
-app.factory('Http', ['$window','$http',
-function(win, $http) {
+app.factory('Http', ['$window','$http','_',
+function(win, $http,_) {
 	var Http = {};
 	
 	//simple http like ajax by angular http
@@ -24,6 +24,7 @@ function(win, $http) {
 		var data = null;
 		if(config.data&&config.method=='POST'){
 			data = 'data='+JSON.stringify(config.data);
+
 		}else if(config.data&&config.method=='GET'){
 			config.url+="?data="+JSON.stringify(config.data);
 		}
@@ -64,7 +65,7 @@ function(win, $http) {
 	return Http;
 }]);
 
-//查询类
+//数据库操作类
 app.factory('Database', ['$window','Http',"_",
 function(win,Http,_) {
 	var Database = {};
@@ -86,11 +87,35 @@ function(win,Http,_) {
 			this.skipNum = skip;
 		};
 		this.find = function(callback){
-			Http.get('/findData',this,callback);
+			Http.get('/findData',this,{
+				success:function(results){
+					if(callback&&callback.success) {
+						_.each(results,function(obj,index){
+							var _obj = new Database.Object(obj.className,obj.attributes);
+							results[index] = _obj;
+						});
+						callback.success(results);
+					}
+				},error:function(data,status){
+					if(callback&&callback.error)
+						callback.error(data,status);
+				}
+			});
 		};
 		this.get = function(id,callback){
 			this.id = id;
-			Http.get('/getData',this,callback);
+			Http.get('/getData',this,{
+				success:function(obj){
+					if(callback&&callback.success) {
+						var _obj = new Database.Object(obj.className,obj.attributes);
+						obj = _obj;
+						callback.success(obj);
+					}
+				},error:function(data,status){
+					if(callback&&callback.error)
+						callback.error(data,status);
+				}
+			});
 		};
 	};
 
@@ -103,7 +128,17 @@ function(win,Http,_) {
 			if(obj){
 				this.attributes = obj;
 			}
-			Http.post('/save',this,callback);
+			Http.post('/save',this,{
+				success:function(obj){
+					if(callback&&callback.success) {
+						this.attributes = obj.attributes;
+						callback.success(this);
+					}
+				},error:function(data,status){
+					if(callback&&callback.error)
+						callback.error(data,status);
+				}
+			});
 		};
 		this.set = function(key,value){
 			this.attributes[key] = value;
