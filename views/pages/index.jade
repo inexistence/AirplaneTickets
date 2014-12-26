@@ -55,6 +55,7 @@ block content
 						//-th 录入时间
 						th 票价
 						th 税费
+						th 舱位等级
 						th 订票
 				tbody
 					each item in flights
@@ -69,6 +70,7 @@ block content
 							td 上海
 							td ¥702
 							td ¥690
+							td 经济舱
 							//- td: a(target="_blank", href="../admin/update/#{item._id}") 修改
 							td: button.btn.btn-outline.del(type="button", data-id="#{item._id}") 订票
 		nav.text-center
