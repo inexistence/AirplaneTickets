@@ -43,7 +43,7 @@ app.get('/',function(req, res) {
 		}, {
 			
 		}]
-	})
+	});
 });
 
 app.get('/ticketDetail/:id',function(req, res) {
@@ -54,6 +54,6 @@ app.get('/ticketDetail/:id',function(req, res) {
 });
 
 app.post('/',function(req,res,next){
-	console.log(req.body);
-	res.end();
+	// console.log(req.body);
+	// res.end();
 });
