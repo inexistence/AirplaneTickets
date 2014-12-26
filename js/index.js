@@ -34,14 +34,15 @@ $(document).ready(function(){
 
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
+	var page = 0;
+	var perPageNum = 10;
 	var query = new Database.Query('Flights');
 	query.equalTo('company','菲律宾航空');
+	query.skip(0);
+	query.limit(perPageNum);
 	query.find({
 		success:function(results){
-			console.log(results);
-			// $scope.$apply(function(){
-				$scope.flights = results;
-			// });
+			$scope.flights = results;
 		},error:function(error){
 			console.log(error);
 		}
