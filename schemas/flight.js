@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+//航班数据结构
 var FlightSchema = new mongoose.Schema({
 		company: String,
 		planeName:String,
@@ -19,7 +20,7 @@ var FlightSchema = new mongoose.Schema({
 				default: Date.now()
 			}
 		}
-})
+});
 
 //每次存储数据前都会调用这个方法
 FlightSchema.pre('save', function(next){
@@ -28,10 +29,10 @@ FlightSchema.pre('save', function(next){
 	} else {
 		this.meta.updateAt = Date.now();
 	}
-
 	next();
-})
+});
 
+//静态函数
 FlightSchema.statics = {
 	fetch: function(cb) {
 		return this
@@ -44,6 +45,6 @@ FlightSchema.statics = {
 		.findOne({_id:id})
 		.exec(cb);
 	}
-}
+};
 
-moudule.exports = FlightSchema;
+module.exports = FlightSchema;

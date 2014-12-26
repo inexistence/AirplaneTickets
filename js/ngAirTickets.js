@@ -6,6 +6,12 @@ function(win) {
 	
 	return Util;
 }]);
+
+//underscore
+app.factory('_', ['$window',
+function(win){
+	return win._;
+}]);
 //http函数
 app.factory('Http', ['$window','$http',
 function(win, $http) {
@@ -59,8 +65,8 @@ function(win, $http) {
 }]);
 
 //查询类
-app.factory('Database', ['$window','Http',
-function(win,Http) {
+app.factory('Database', ['$window','Http',"_",
+function(win,Http,_) {
 	var Database = {};
 	Database.Query = function(className){
 		this.id;
@@ -87,6 +93,19 @@ function(win,Http) {
 			Http.get('/getData',this,callback);
 		};
 	};
+
+	Database.Object = function(className, obj){
+		this.className = className;
+		if(obj){
+			this.attributes = obj;
+		}
+		this.save = function(callback){
+			Http.post('/save',this,callback);
+		};
+		this.del = function(callback){
+
+		};
+	}
 	
 	return Database;
 }]);

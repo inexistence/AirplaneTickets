@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 //使用mongoose作为数据库
 var mongoose = require('mongoose');
 var port = process.env.PORT || 80;
@@ -7,6 +8,11 @@ var bodyParser = require('body-parser');
 var app = express();
 //连接本地数据库airpaneTickets
 mongoose.connect('mongodb://localhost/airpaneTickets');
+
+var Flight = require('./models/flight');
+
+
+
 
 //使前端post来的数据能从req.body中取得
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,6 +27,8 @@ app.set('view engine', 'jade');
 app.listen(port);
 
 console.log('airplaneTickets started on port '+port);
+
+
 
 // 编写路由
 // get(路由匹配规则,回调方法)
@@ -43,21 +51,26 @@ app.get('/ticketDetail/:id',function(req, res) {
 app.get('/findData',function(req,res){
 	var query = req.query.data;
 	query = JSON.parse(query);
-	var flights = [{
-		_id:'0',
-		company:'菲律宾航空',
-		planeName:'PR383 320(中)',
-		flyDate:'5月6日 01:45',
-		arrDate:'5月10日 01:45',
-		flyTime:'约10小时',
-		flyAirport:'广州白云国际机场',
-		arrAirport:'北京国际机场',
-		fare:'¥702',
-		tax:'¥600',
-		page:query.skipNum
-	}];
-	res.send(flights);
-	res.end();
+	Flight.fetch(function(err,results){
+		if(err)console.log(err);
+		console.log(results);
+		var flights = [{
+			_id:'0',
+			company:'菲律宾航空',
+			planeName:'PR383 320(中)',
+			flyDate:'5月6日 01:45',
+			arrDate:'5月10日 01:45',
+			flyTime:'约10小时',
+			flyAirport:'广州白云国际机场',
+			arrAirport:'北京国际机场',
+			fare:'¥702',
+			tax:'¥600',
+			page:query.skipNum
+		}];
+		res.send({'className':query.className,'attributes':flights});
+		res.end();
+	})
+	
 });
 
 app.get('/getData',function(req,res){
@@ -76,6 +89,17 @@ app.get('/getData',function(req,res){
 		tax:'¥600',
 		page:query.skipNum
 	}];
-	res.send(flights);
+	res.send({'className':query.className,'attributes':flights});
 	res.end();
 });
+
+
+app.post('/save',function(req,res){
+	var obj = req.body.data;
+	var className = obj.className;
+	var _obj;
+	if(obj.attributes._id!='undefined') {
+		
+	}
+
+})
