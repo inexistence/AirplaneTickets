@@ -32,13 +32,16 @@ $(document).ready(function(){
 	 $('#endDatepicker').datepicker();
 });
 
-app.controller("indexCtrl", ['$scope', 'Util','Query',
-function($scope, Util, Query) {
-	var query = new Query('Flights');
+app.controller("indexCtrl", ['$scope', 'Util','Database',
+function($scope, Util, Database) {
+	var query = new Database.Query('Flights');
 	query.equalTo('company','菲律宾航空');
 	query.find({
 		success:function(results){
 			console.log(results);
+			// $scope.$apply(function(){
+				$scope.flights = results;
+			// });
 		},error:function(error){
 			console.log(error);
 		}

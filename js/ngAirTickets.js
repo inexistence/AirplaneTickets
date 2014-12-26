@@ -59,9 +59,10 @@ function(win, $http) {
 }]);
 
 //查询类
-app.factory('Query', ['$window','Http',
+app.factory('Database', ['$window','Http',
 function(win,Http) {
-	var Query = function(className){
+	var Database = {};
+	Database.Query = function(className){
 		this.id;
 		this.className = className;
 		this.limitNum = 100;
@@ -87,5 +88,5 @@ function(win,Http) {
 		};
 	};
 	
-	return Query;
+	return Database;
 }]);

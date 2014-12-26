@@ -39,8 +39,8 @@ app.get('/ticketDetail/:id',function(req, res) {
 app.get('/findData',function(req,res){
 	var query = req.query.data;
 	query = JSON.parse(query);
-	console.log(query);
 	var flights = [{
+		_id:'0',
 		company:'菲律宾航空',
 		planeName:'PR383 320(中)',
 		flyDate:'5月6日 01:45',
@@ -50,7 +50,7 @@ app.get('/findData',function(req,res){
 		arrAirport:'北京国际机场',
 		fare:'¥702',
 		tax:'¥600',
-		ticketId:'123'
+		page:query.skipNum
 	}];
 	res.send(flights);
 	res.end();
@@ -59,8 +59,8 @@ app.get('/findData',function(req,res){
 app.get('/getData',function(req,res){
 	var query = req.query.data;
 	query = JSON.parse(query);
-	console.log(query);
 	var flights = [{
+		_id:'0',
 		company:'菲律宾航空',
 		planeName:'PR383 320(中)',
 		flyDate:'5月6日 01:45',
@@ -70,7 +70,7 @@ app.get('/getData',function(req,res){
 		arrAirport:'北京国际机场',
 		fare:'¥702',
 		tax:'¥600',
-		ticketId:'123'
+		page:query.skipNum
 	}];
 	res.send(flights);
 	res.end();
