@@ -1,9 +1,11 @@
 var express = require('express');
 var port = process.env.PORT || 80;
+//处理post中的data数据
+var bodyParser = require('body-parser');
 var app = express();
 
-//能将表单的数据进行格式化
-//app.use(express.bodyParser());
+//使前端post来的数据能从req.body中取得
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname));
 //设置视图根目录
 app.set('views', './views/pages');
@@ -51,3 +53,7 @@ app.get('/ticketDetail/:id',function(req, res) {
 	})
 });
 
+app.post('/',function(req,res,next){
+	console.log(req.body);
+	res.end();
+});

@@ -10,6 +10,15 @@ $(document).ready(function(){
 	// 		suffix: [],
 	// 		meridiem: ["上午", "下午"]
 	// };
+	$.ajax({
+		type: 'POST',
+		url: '/',
+		data: { name: "John", age: 18 },
+		success: function(data){
+			// alert("Data Loaded: " + data);
+		},
+		dataType: 'text'
+	});
 	$("#startPlace").select2({
 		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
 	});
