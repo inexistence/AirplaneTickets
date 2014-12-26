@@ -40,9 +40,9 @@ FlightSchema.statics = {
 		}
 		return this
 		.find(q.equal)
-		.skip(q.skip)
-		.limit(q.limit)
-		.sort('meta.updateAt')
+		.skip(q.skipNum)
+		.limit(q.limitNum)
+		.sort('-meta.updateAt')
 		.exec(cb);
 	},
 	findById: function(id, cb) {

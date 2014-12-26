@@ -74,11 +74,9 @@ function(win,Http,_) {
 		this.className = className;
 		this.limitNum = 100;
 		this.skipNum = 0;
-		this.equal = [];
+		this.equal = {};
 		this.equalTo = function(name,value){
-			var equalItem = {};
-			equalItem[name] = value;
-			this.equal.push(equalItem);
+			this.equal[name] = value;
 		};
 		this.limit = function(limit){
 			this.limitNum = limit;
@@ -146,8 +144,18 @@ function(win,Http,_) {
 		this.get = function(key){
 			return this.attributes[key];
 		}
-		this.del = function(callback){
-
+		this.delete = function(callback){
+			Http.post('/removeById',this,{
+				success:function(obj){
+					if(callback&&callback.success) {
+						this.attributes = obj.attributes;
+						callback.success(this);
+					}
+				},error:function(data,status){
+					if(callback&&callback.error)
+						callback.error(data,status);
+				}
+			});
 		};
 	}
 	

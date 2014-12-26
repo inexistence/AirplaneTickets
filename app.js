@@ -91,7 +91,8 @@ app.get('/getData',function(req,res){
 	}
 	if(obj.attributes._id===undefined){
 		res.status(404).send({error:'can not find Object without id.'});
-		res.end();	
+		res.end();
+		return ;
 	}
 	Class.findById(obj.attributes._id, function(err,result){
 		if(err){
@@ -154,5 +155,33 @@ app.post('/save',function(req,res){
 			res.send({className:className,attributes:obj});
 			res.end();
 		});
+	}
+});
+
+
+app.post('/removeById',function(req,res){
+	var obj = req.body.data;
+	obj = JSON.parse(obj);
+	var className = obj.className;
+	var Class = getClass(className);
+	if(Class===undefined){
+		res.status(404).send({error:'can not find Class '+className});
+		res.end();
+		return ;
+	}
+	if(obj.attributes._id !== undefined) {
+		Class.remove({_id:obj.attributes._id},function(err,obj){
+			if(err){
+				res.status(404).send({error:err,object:obj});
+				res.end();
+				return ;
+			}
+			res.send({className:className,attributes:obj});
+			res.end();
+		});
+	} else {
+		res.status(404).send({error:'can not find Object without id.'});
+		res.end();
+		return ;
 	}
 });

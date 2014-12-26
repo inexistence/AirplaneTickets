@@ -35,16 +35,15 @@ $(document).ready(function(){
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
 	var page = 0;
-	var perPageNum = 10;
+	var perPageNum = 1;
 	var query = new Database.Query('Flight');
-	query.equalTo('company','菲律宾航空');
+	// query.equalTo('flyTime','约9小时');
 	query.skip(0);
 	query.limit(perPageNum);
 	query.find({
 		success:function(results){
 			console.log(results);
 			$scope.flights = results;
-			results[0].set('flyTime','约1小时');
 		},error:function(error){
 			console.log("error");
 			console.log(error);
