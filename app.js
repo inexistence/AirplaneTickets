@@ -44,7 +44,8 @@ app.get('/',function(req, res) {
 	})
 });
 
-app.get('/ticketDetail',function(req, res) {
+app.get('/ticketDetail/:id',function(req, res) {
+	var id = req.params.id;
 	res.render('ticketDetail', {
 		title: '机票详情'
 	})
