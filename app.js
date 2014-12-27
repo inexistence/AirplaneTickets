@@ -9,7 +9,7 @@ var app = express();
 //连接本地数据库airpaneTickets
 mongoose.connect('mongodb://localhost/airpaneTickets');
 
-var Flight = require('./models/flight');
+var Models = require('./models/models');
 
 
 //使前端post来的数据能从req.body中取得
@@ -26,11 +26,6 @@ app.listen(port);
 
 console.log('airplaneTickets started on port '+port);
 
-//className匹配
-function getClass(className){
-	if(className=='Flight')
-		return Flight;
-}
 
 // 编写路由
 // get(路由匹配规则,回调方法)
@@ -54,7 +49,7 @@ app.get('/findData',function(req,res){
 	var query = req.query.data;
 	query = JSON.parse(query);
 	var className = query.className;
-	var Class = getClass(className);
+	var Class = Models.getClass(className);
 	if(Class===undefined){
 		res.status(404).send({error:'can not find class '+className});
 		res.end();
@@ -83,7 +78,7 @@ app.get('/getData',function(req,res){
 	var query = req.query.data;
 	query = JSON.parse(query);
 	var className = query.className;
-	var Class = getClass(className);
+	var Class = Models.getClass(className);
 	if(Class===undefined){
 		res.status(404).send({error:'can not find Class '+className});
 		res.end();
@@ -121,7 +116,7 @@ app.post('/save',function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
 	var className = obj.className;
-	var Class = getClass(className);
+	var Class = Models.getClass(className);
 	if(Class===undefined){
 		res.status(404).send({error:'can not find Class '+className});
 		res.end();
@@ -163,7 +158,7 @@ app.post('/removeById',function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
 	var className = obj.className;
-	var Class = getClass(className);
+	var Class = Models.getClass(className);
 	if(Class===undefined){
 		res.status(404).send({error:'can not find Class '+className});
 		res.end();

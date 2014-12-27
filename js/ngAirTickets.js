@@ -12,6 +12,7 @@ app.factory('_', ['$window',
 function(win){
 	return win._;
 }]);
+
 //http函数
 app.factory('Http', ['$window','$http','_',
 function(win, $http, _) {
