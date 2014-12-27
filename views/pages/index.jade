@@ -82,23 +82,19 @@ block content
 									button.btn.btn-outline.del(type="button", data-id="{{item.attributes._id}}") 订票
 			nav.text-center
 				ul.pagination
-					//- li.disabled
+					//- li(ng-class="{disabled:pages[0]==1}")
 					//- 	a(href="#") <<
-					//- li.disabled
+					//- li(ng-class="{disabled:activePage[0]}")
 					//- 	a(href="#") <
-					li.active
-						a(href="#") 1
-					li
-						a(href="#") 2
-					li
-						a(href="#") 3
-					li
-						a(href="#") 4
-					li
-						a(href="#") 5
-					li
-						a(href="#") 6
-					li
+					li(ng-if="!pages[0]==1")
+						a(href="#") <<
+					li(ng-if="!activePage[0]")
+						a(href="#") <
+
+					li(ng-repeat="page in pages",ng-class="{active: activePage[{{$index}}]}" )
+						a(href="#",ng-click="queryByPage(pages[$index])") {{page}}
+
+					li(ng-if="!activePage[SHOW_PAGE_LEN-1]")
 						a(href="#") >
-					li
+					li(ng-if="!true")
 						a(href="#") >>

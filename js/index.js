@@ -34,62 +34,68 @@ $(document).ready(function(){
 
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
-	var page = 0;
-	var PER_NUM = 10;
+	//显示第1页
+	var page = 1;
+	//每页的记录数量
+	var PER_NUM = 1;
+	//底部页码最多显示3个
+	$scope.SHOW_PAGE_LEN = 3;
+
+	var activePageFun=function(_page){
+		$scope.activePage = [];
+		$scope.activePage[_page]=true;
+	}
+
+	activePageFun(page);
 
 	function countTotalPages(){
 		var query = new Database.Query('Flight');
 		query.count({
 			success:function(count){
-				$scope.pages = count.number/PER_NUM;
+				$scope.pageNum = count.number/PER_NUM;
+				$scope.pages = [];
+				for(var i = 0; i < $scope.pageNum; i++){
+					$scope.pages.push(i+1);
+				}
 			},error:function(error){
 				console.log(error);
 			}
 		})
 	}
 
-	function queryByPage(page){
+	$scope.queryByPage = function(_page){
+		page = _page;
 		var query = new Database.Query('Flight');
 		// query.equalTo('flyTime','约9小时');
-		query.skip(page);
+		query.skip(page-1);
 		query.limit(PER_NUM);
 		query.find({
 			success:function(results){
-				console.log(results);
 				$scope.flights = results;
+				activePageFun(page-1);
 				// results[0].delete();
 			},error:function(error){
 				console.log("error");
 				console.log(error);
 			}
 		});
-		// query.get("549dbda4200907202159f891",{
-		// 	success:function(obj){
-		// 		console.log(obj);
-		// 		$scope.flights=[obj];
-		// 	},error:function(error){
-		// 		console.log(error);
-		// 	}
-		// });
-		
 	};
 
-	queryByPage(page);
+	$scope.queryByPage(page);
 	countTotalPages();
 	
 
 
 	// var flight = new Database.Object('Flight',{
-	// 	company:'菲律宾航空',
-	// 	planeName:'PR383 320(中)',
-	// 	flyDate:'5月6日 01:45',
-	// 	arrDate:'5月10日 01:45',
-	// 	flyTime:'约10小时',
-	// 	flyAirport:'广州白云国际机场',
-	// 	arrAirport:'北京国际机场',
-	// 	fare:'¥702',
-	// 	tax:'¥600',
-	// 	page:query.skipNum
+	// 	company:'天堂航空',
+	// 	planeName:'RP233 22(小)',
+	// 	flyDate:'5月8日 12:25',
+	// 	arrDate:'5月15日 23:15',
+	// 	flyTime:'约1小时',
+	// 	flyAirport:'上海白云国际机场',
+	// 	arrAirport:'天空国际机场',
+	// 	fare:'¥22',
+	// 	tax:'¥3'
 	// });
 
 	// flight.save(null,{
