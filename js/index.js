@@ -35,24 +35,25 @@ $(document).ready(function(){
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
 	//显示第1页
-	var page = 1;
+	$scope.curPage = 1;
 	//每页的记录数量
-	var PER_NUM = 1;
+	var PER_NUM = 2;
 	//底部页码最多显示3个
-	$scope.SHOW_PAGE_LEN = 3;
+	// $scope.SHOW_PAGE_LEN = 3;
 
 	var activePageFun=function(_page){
 		$scope.activePage = [];
 		$scope.activePage[_page]=true;
 	}
 
-	activePageFun(page);
+	activePageFun($scope.curPage);
 
 	function countTotalPages(){
 		var query = new Database.Query('Flight');
 		query.count({
 			success:function(count){
-				$scope.pageNum = count.number/PER_NUM;
+				$scope.pageNum = Math.round(count.number/PER_NUM);
+				console.log($scope.pageNum);
 				$scope.pages = [];
 				for(var i = 0; i < $scope.pageNum; i++){
 					$scope.pages.push(i+1);
@@ -64,15 +65,15 @@ function($scope, Util, Database) {
 	}
 
 	$scope.queryByPage = function(_page){
-		page = _page;
+		$scope.curPage = _page;
 		var query = new Database.Query('Flight');
 		// query.equalTo('flyTime','约9小时');
-		query.skip(page-1);
+		query.skip(($scope.curPage-1)*PER_NUM);
 		query.limit(PER_NUM);
 		query.find({
 			success:function(results){
 				$scope.flights = results;
-				activePageFun(page-1);
+				activePageFun($scope.curPage-1);
 				// results[0].delete();
 			},error:function(error){
 				console.log("error");
@@ -81,7 +82,7 @@ function($scope, Util, Database) {
 		});
 	};
 
-	$scope.queryByPage(page);
+	$scope.queryByPage($scope.curPage);
 	countTotalPages();
 	
 

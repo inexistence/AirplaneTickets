@@ -89,12 +89,12 @@ block content
 					li(ng-if="!pages[0]==1")
 						a(href="#") <<
 					li(ng-if="!activePage[0]")
-						a(href="#") <
+						a(href="#",ng-click="queryByPage(curPage-1)") <
 
 					li(ng-repeat="page in pages",ng-class="{active: activePage[{{$index}}]}" )
 						a(href="#",ng-click="queryByPage(pages[$index])") {{page}}
 
-					li(ng-if="!activePage[SHOW_PAGE_LEN-1]")
-						a(href="#") >
+					li(ng-if="!activePage[pageNum-1]")
+						a(href="#",ng-click="queryByPage(curPage+1)") >
 					li(ng-if="!true")
 						a(href="#") >>
