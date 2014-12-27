@@ -32,3 +32,4 @@ jade
 
 1.开启mongodb,在mongodb的安装目录下bin文件夹打开命令窗口输入mongod命令
 2.在本项目app.js所在目录下打开命令窗口，输入node app.js命令。若需要的模块都已安装成功，服务端正常启动。出现'airplaneTickets started on port 80'提示
+3.在浏览器输入localhost进入index页面
