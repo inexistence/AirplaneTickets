@@ -78,7 +78,11 @@ function($scope, Util, Database) {
 		var endId = $("#endPlace").val();
 		//value
 		var endValue = $("#endPlace").select2("data").text;
-		alert("出发地:"+startValue+"  目的地:"+endValue);
+
+		var startDate = $("#startDatepicker").datepicker('getDate');
+		startDate = startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate()
+		console.log(startDate);
+		alert("出发地:"+startValue+"  目的地:"+endValue+"  出发时间:"+startDate);
 	}
 	
 	activePageFun($scope.curPage);
