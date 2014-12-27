@@ -126,7 +126,9 @@ app.post('/save',function(req,res){
 	if(obj.attributes._id !== undefined) {
 		Class.findById(obj.attributes._id, function(err,result){
 			if(err){
-
+				res.status(404).send({error:err,object:obj});
+				res.end();
+				return ;
 			}
 			_obj = _.extend(result, obj.attributes);
 			_obj.save(function(err,obj){
