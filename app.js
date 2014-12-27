@@ -84,30 +84,26 @@ app.get('/getData',function(req,res){
 		res.end();
 		return ;
 	}
-	if(obj.attributes._id===undefined){
+	if(query._id===undefined){
 		res.status(404).send({error:'can not find Object without id.'});
 		res.end();
 		return ;
 	}
-	Class.findById(obj.attributes._id, function(err,result){
+	Class.findById(query._id, function(err,result){
 		if(err){
 			res.status(404).send({error:err,object:result});
 			res.end();
 			return ;
 		}
-		_obj = _.extend(result, obj.attributes);
-		_obj.save(function(err,obj){
-			if(err){
-				res.status(404).send({error:err,object:obj});
-				res.end();
-			}
-			res.send({className:className,attributes:obj});
-			res.end();
-			});
+		
+		res.send({className:className,attributes:result});
+		res.end();
 	});
-	
-	res.send({'className':query.className,'attributes':flight});
-	res.end();
+});
+
+app.get('/count',function(req,res){
+
+	Model.count(conditions, callback);
 });
 
 

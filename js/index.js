@@ -35,21 +35,36 @@ $(document).ready(function(){
 app.controller("indexCtrl", ['$scope', 'Util','Database',
 function($scope, Util, Database) {
 	var page = 0;
-	var perPageNum = 100;
-	var query = new Database.Query('Flight');
-	// query.equalTo('flyTime','约9小时');
-	query.skip(0);
-	query.limit(perPageNum);
-	query.find({
-		success:function(results){
-			console.log(results);
-			$scope.flights = results;
-			// results[0].delete();
-		},error:function(error){
-			console.log("error");
-			console.log(error);
-		}
-	});
+	var PER_NUM = 10;
+
+	function queryByPage(page){
+		var query = new Database.Query('Flight');
+		// query.equalTo('flyTime','约9小时');
+		query.skip(page);
+		query.limit(PER_NUM);
+		query.find({
+			success:function(results){
+				console.log(results);
+				$scope.flights = results;
+				// results[0].delete();
+			},error:function(error){
+				console.log("error");
+				console.log(error);
+			}
+		});
+		// query.get("549dbda4200907202159f891",{
+		// 	success:function(obj){
+		// 		console.log(obj);
+		// 		$scope.flights=[obj];
+		// 	},error:function(error){
+		// 		console.log(error);
+		// 	}
+		// });
+		
+	};
+
+	queryByPage(page);
+	
 
 
 	// var flight = new Database.Object('Flight',{

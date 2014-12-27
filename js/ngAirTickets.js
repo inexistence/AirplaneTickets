@@ -71,7 +71,7 @@ app.factory('Database', ['$window','Http',"_",
 function(win,Http,_) {
 	var Database = {};
 	Database.Query = function(className){
-		this.id;
+		this._id;
 		this.className = className;
 		this.limitNum = 100;
 		this.skipNum = 0;
@@ -102,7 +102,7 @@ function(win,Http,_) {
 			});
 		};
 		this.get = function(id,callback){
-			this.id = id;
+			this._id = id;
 			Http.get('/getData',this,{
 				success:function(obj){
 					if(callback&&callback.success) {
