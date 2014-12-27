@@ -102,8 +102,25 @@ app.get('/getData',function(req,res){
 });
 
 app.get('/count',function(req,res){
+	var query = req.query.data;
+	query = JSON.parse(query);
+	var className = query.className;
+	var Class = Models.getClass(className);
+	if(Class===undefined){
+		res.status(404).send({error:'can not find Class '+className});
+		res.end();
+		return ;
+	}
 
-	Model.count(conditions, callback);
+	Class.count(query.equal, function(err,result){
+		if(err){
+			res.status(404).send({error:err,object:result});
+			res.end();
+			return ;
+		}
+		res.send({className:className,number:result});
+		res.end();
+	});
 });
 
 

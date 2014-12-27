@@ -37,6 +37,17 @@ function($scope, Util, Database) {
 	var page = 0;
 	var PER_NUM = 10;
 
+	function countTotalPages(){
+		var query = new Database.Query('Flight');
+		query.count({
+			success:function(count){
+				$scope.pages = count.number/PER_NUM;
+			},error:function(error){
+				console.log(error);
+			}
+		})
+	}
+
 	function queryByPage(page){
 		var query = new Database.Query('Flight');
 		// query.equalTo('flyTime','约9小时');
@@ -64,6 +75,7 @@ function($scope, Util, Database) {
 	};
 
 	queryByPage(page);
+	countTotalPages();
 	
 
 

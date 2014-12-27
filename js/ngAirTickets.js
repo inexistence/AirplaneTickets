@@ -116,6 +116,19 @@ function(win,Http,_) {
 				}
 			});
 		};
+
+		this.count = function(callback){
+			Http.get('/count',this,{
+				success:function(obj){
+					if(callback&&callback.success) {
+						callback.success(obj);
+					}
+				},error:function(data,status){
+					if(callback&&callback.error)
+						callback.error(data,status);
+				}
+			});
+		}
 	};
 
 	Database.Object = function(className, obj){
