@@ -1,18 +1,19 @@
-//------引用的module
+//------引用的module------
 var express = require('express');
 var _ = require('underscore');
 //使用mongoose作为数据库
 var mongoose = require('mongoose');
 //处理post中的data数据
 var bodyParser = require('body-parser');
-//------
+//-------------------------
 
 
 //引用自己写的服务端的数据库Module
-var Database = require('./database/database');
+//包含Database.Query&Database.Object
+var Database = require('./database/databaseModule');
 
-//连接本地数据库airpaneTickets
-mongoose.connect('mongodb://localhost/airpaneTickets');
+//连接本地数据库airplaneTickets
+mongoose.connect('mongodb://localhost/airplaneTickets');
 
 
 var app = express();

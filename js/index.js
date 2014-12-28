@@ -2,10 +2,10 @@
 $(document).ready(function(){
 
 	$("#startPlace").select2({
-		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'}]
+		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'},{id:6,text:'地狱机场'}]
 	});
 	$("#endPlace").select2({
-		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'}]
+		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'},{id:6,text:'地狱机场'}]
 	});
 	
 	 $('#startDatepicker').datepicker();
@@ -106,18 +106,18 @@ function($scope, Util, Database) {
 	$scope.queryByPage($scope.curPage);
 	
 	// var flight = new Database.Object('Flight',{
-	// 	company:'天堂航空',
-	// 	planeName:'RP233 22(小)',
-	// 	flyDate:'5月8日 12:25',
-	// 	arrDate:'5月15日 23:15',
-	// 	flyTime:'约1小时',
+	// 	company:'马来西亚航空',
+	// 	planeName:'RP33 22(小)',
+	// 	flyDate:'2月1日 12:25',
+	// 	arrDate:'2月5日 23:15',
+	// 	flyTime:'约12小时',
 	// 	flyAirport:'上海白云国际机场',
-	// 	arrAirport:'天空国际机场',
-	// 	fare:'¥22',
-	// 	tax:'¥3'
+	// 	arrAirport:'马来西亚大海国际机场',
+	// 	fare:'¥222',
+	// 	tax:'¥111'
 	// });
 
-	// flight.save({company:'地狱航空'},{
+	// flight.save(null,{
 	// 	success:function(obj){
 	// 		console.log(obj);
 	// 	}
