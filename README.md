@@ -32,7 +32,7 @@ jade
 
 1.安装node、mongodb
 
-2.安装需要的node模块,使用npm install
+2.在命令行输入npm install以安装需要的node模块
 
 
 启动服务端
