@@ -9,7 +9,7 @@ var app = express();
 //连接本地数据库airpaneTickets
 mongoose.connect('mongodb://localhost/airpaneTickets');
 
-var Models = require('./models/models');
+var Models = require('./database/models/models');
 
 
 //使前端post来的数据能从req.body中取得

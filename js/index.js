@@ -2,10 +2,10 @@
 $(document).ready(function(){
 
 	$("#startPlace").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
+		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'}]
 	});
 	$("#endPlace").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'深圳'},{id:3,text:'上海'},{id:4,text:'南京'}]
+		data:[{id:0,text:'广州白云国际机场'},{id:2,text:'北京国际机场'},{id:3,text:'上海白云国际机场'},{id:4,text:'马来西亚大海国际机场'},{id:5,text:'天空国际机场'}]
 	});
 	
 	 $('#startDatepicker').datepicker();
@@ -20,6 +20,8 @@ function($scope, Util, Database) {
 	var PER_NUM = 2;
 	//底部页码最多显示3个
 	// $scope.SHOW_PAGE_LEN = 3;
+	var startPlace;
+	var arrPlace;
 
 	var activePageFun=function(_page){
 		$scope.activePage = [];
@@ -28,6 +30,12 @@ function($scope, Util, Database) {
 
 	function countTotalPages(){
 		var query = new Database.Query('Flight');
+		if(startPlace){
+			query.equalTo('flyAirport',startPlace);	
+		}
+		if(arrPlace){
+			query.equalTo('arrAirport',arrPlace);
+		}
 		query.count({
 			success:function(count){
 				$scope.pageNum = Math.round(count.number/PER_NUM);
@@ -45,6 +53,12 @@ function($scope, Util, Database) {
 	$scope.queryByPage = function(_page){
 		$scope.curPage = _page;
 		var query = new Database.Query('Flight');
+		if(startPlace){
+			query.equalTo('flyAirport',startPlace);	
+		}
+		if(arrPlace){
+			query.equalTo('arrAirport',arrPlace);
+		}
 		// query.equalTo('flyTime','约9小时');
 		query.skip(($scope.curPage-1)*PER_NUM);
 		query.limit(PER_NUM);
@@ -72,22 +86,25 @@ function($scope, Util, Database) {
 		//id
 		var startId = $("#startPlace").val();
 		//value
-		var startValue = $("#startPlace").select2("data").text;
+		startPlace = $("#startPlace").select2("data").text;
 
 		//id
 		var endId = $("#endPlace").val();
 		//value
-		var endValue = $("#endPlace").select2("data").text;
+		arrPlace = $("#endPlace").select2("data").text;
 
 		var startDate = $("#startDatepicker").datepicker('getDate');
 		startDate = startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate()
 		console.log(startDate);
-		alert("出发地:"+startValue+"  目的地:"+endValue+"  出发时间:"+startDate);
+		// alert("出发地:"+startValue+"  目的地:"+endValue+"  出发时间:"+startDate);
+		$scope.curPage = 1;
+		countTotalPages();
+		$scope.queryByPage($scope.curPage);
 	}
 	
-	activePageFun($scope.curPage);
-	$scope.queryByPage($scope.curPage);
+	activePageFun($scope.curPage-1);
 	countTotalPages();
+	$scope.queryByPage($scope.curPage);
 	
 	// var flight = new Database.Object('Flight',{
 	// 	company:'天堂航空',
