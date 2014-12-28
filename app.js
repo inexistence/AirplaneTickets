@@ -35,8 +35,6 @@ console.log('airplaneTickets started on port '+port);
 
 
 // 编写路由
-// get(路由匹配规则,回调方法)
-// 从后端匹配到路由匹配规则,调用回调方法
 
 // index page
 app.get('/',function(req, res) {
@@ -52,6 +50,10 @@ app.get('/ticketDetail/:id',function(req, res) {
 	})
 });
 
+
+/*******对前端发送来的数据库请求进行处理******/
+
+//根据条件查找数据
 app.get('/findData',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
@@ -68,6 +70,7 @@ app.get('/findData',function(req,res){
 	});
 });
 
+//根据id获取记录
 app.get('/getData',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
@@ -84,6 +87,7 @@ app.get('/getData',function(req,res){
 	});
 });
 
+//返回符合条件的记录数量
 app.get('/count',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
@@ -100,7 +104,7 @@ app.get('/count',function(req,res){
 	});
 });
 
-
+//保存数据(新建&修改)
 app.post('/save',function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
@@ -117,7 +121,7 @@ app.post('/save',function(req,res){
 	});
 });
 
-
+//删除单个数据
 app.post('/removeById',function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
@@ -133,3 +137,5 @@ app.post('/removeById',function(req,res){
 		}
 	});
 });
+
+/*******对前端发送来的数据库请求进行处理 END******/
