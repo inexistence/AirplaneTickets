@@ -137,14 +137,16 @@ function(win,Http,_) {
 			this.attributes = obj;
 		}
 		this.save = function(obj,callback){
+			var that = this;
 			if(obj){
-				this.attributes = obj;
+				this.attributes = _.extend(this.attributes,obj);
 			}
 			Http.post('/save',this,{
 				success:function(obj){
 					if(callback&&callback.success) {
-						this.attributes = obj.attributes;
-						callback.success(this);
+						that.className = obj.className;
+						that.attributes = obj.attributes;
+						callback.success(that);
 					}
 				},error:function(data,status){
 					if(callback&&callback.error)
@@ -159,11 +161,12 @@ function(win,Http,_) {
 			return this.attributes[key];
 		}
 		this.delete = function(callback){
+			var that = this;
 			Http.post('/removeById',this,{
 				success:function(obj){
 					if(callback&&callback.success) {
-						this.attributes = obj.attributes;
-						callback.success(this);
+						that.attributes = obj.attributes;
+						callback.success(that);
 					}
 				},error:function(data,status){
 					if(callback&&callback.error)

@@ -39,7 +39,6 @@ function($scope, Util, Database) {
 		query.count({
 			success:function(count){
 				$scope.pageNum = Math.round(count.number/PER_NUM);
-				console.log($scope.pageNum);
 				$scope.pages = [];
 				for(var i = 0; i < $scope.pageNum; i++){
 					$scope.pages.push(i+1);
@@ -66,7 +65,7 @@ function($scope, Util, Database) {
 			success:function(results){
 				$scope.flights = results;
 				activePageFun($scope.curPage-1);
-				// results[0].delete();
+				console.log(results);
 			},error:function(error){
 				console.log("error");
 				console.log(error);
@@ -95,7 +94,7 @@ function($scope, Util, Database) {
 
 		var startDate = $("#startDatepicker").datepicker('getDate');
 		startDate = startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate()
-		console.log(startDate);
+		// console.log(startDate);
 		// alert("出发地:"+startValue+"  目的地:"+endValue+"  出发时间:"+startDate);
 		$scope.curPage = 1;
 		countTotalPages();
@@ -118,9 +117,10 @@ function($scope, Util, Database) {
 	// 	tax:'¥3'
 	// });
 
-	// flight.save(null,{
+	// flight.save({company:'地狱航空'},{
 	// 	success:function(obj){
 	// 		console.log(obj);
 	// 	}
 	// });
+
 }]);
