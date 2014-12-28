@@ -4,13 +4,13 @@ extends ../layout
 
 block javascript
 	script(src="../js/index.js")
-	script(src="../js/select2.js")
-	script(src="../js/bootstrap-datepicker.js")
+	script(src="../lib/js/select2.js")
+	script(src="../lib/js/bootstrap-datepicker.js")
 
 block css
-	link(href="../css/select2.css", rel="stylesheet")
+	link(href="../lib/css/select2.css", rel="stylesheet")
+	link(href="../lib/css/datepicker3.css", rel="stylesheet")
 	link(href="../css/index.css", rel="stylesheet")
-	link(href="../css/datepicker3.css", rel="stylesheet")
 
 block content
 	div(ng-controller="indexCtrl")
