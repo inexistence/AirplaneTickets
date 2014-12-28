@@ -38,11 +38,15 @@ function($scope, Util, Database) {
 		}
 		query.count({
 			success:function(count){
-				$scope.pageNum = Math.round(count.number/PER_NUM);
-				$scope.pages = [];
-				for(var i = 0; i < $scope.pageNum; i++){
-					$scope.pages.push(i+1);
-				}
+				$scope.$apply(function(){
+					$scope.pageNum = Math.round(count.number/PER_NUM);
+					$scope.pages = [];
+					for(var i = 0; i < $scope.pageNum; i++){
+						$scope.pages.push(i+1);
+					}
+					console.log('count');
+					console.log(count);
+				});
 			},error:function(error){
 				console.log(error);
 			}
@@ -63,9 +67,10 @@ function($scope, Util, Database) {
 		query.limit(PER_NUM);
 		query.find({
 			success:function(results){
-				$scope.flights = results;
-				activePageFun($scope.curPage-1);
-				console.log(results);
+				$scope.$apply(function(){
+					$scope.flights = results;
+					activePageFun($scope.curPage-1);
+				});
 			},error:function(error){
 				console.log("error");
 				console.log(error);

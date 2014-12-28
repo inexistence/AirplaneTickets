@@ -13,7 +13,7 @@ function(win){
 	return win._;
 }]);
 
-//http函数
+//使用angular的$http实现的http函数
 app.factory('Http', ['$window','$http','_',
 function(win, $http, _) {
 	var Http = {};
@@ -66,7 +66,21 @@ function(win, $http, _) {
 	return Http;
 }]);
 
-//数据库操作类
+//将一般形式实现的Ajax类
+//提供给angular
+app.factory('Ajax', ['$window',
+ function(win) {
+ 	return win.Ajax;
+ }]);
+
+//将一般形式实现的数据库操作类
+//提供给angular
+app.factory('Database', ['$window',
+function(win) {
+ 	return win.Database;
+ }]);
+//angular形式实现的数据库操作
+/*
 app.factory('Database', ['$window','Http',"_",
 function(win,Http,_) {
 	var Database = {};
@@ -133,6 +147,7 @@ function(win,Http,_) {
 
 	Database.Object = function(className, obj){
 		this.className = className;
+		this.attributes = {};
 		if(obj){
 			this.attributes = obj;
 		}
@@ -177,4 +192,4 @@ function(win,Http,_) {
 	}
 	
 	return Database;
-}]);
+}]);*/
