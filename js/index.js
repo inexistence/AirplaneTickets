@@ -122,7 +122,7 @@ function($scope, Util, Database) {
 	// 	tax:'¥111'
 	// });
 
-	// flight.save(null,{
+	// flight.save({company:'地狱航空',flyAirport:'地狱机场'},{
 	// 	success:function(obj){
 	// 		console.log(obj);
 	// 	}

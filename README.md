@@ -5,16 +5,17 @@ AirplaneTickets
 
 
 技术
-===============
-
-数据库：mongodb
-
-服务端搭建：nodejs
-
-前端框架：bootstrap angularjs
+------------
 
 
-引用的node模块:
+**数据库**：mongodb
+
+**服务端搭建**：nodejs
+
+**前端框架**：bootstrap angularjs
+
+
+**引用的node模块**:
 
 express
 
@@ -28,7 +29,8 @@ jade
 
 
 环境搭建
-===============
+---------------
+
 
 1.安装node、mongodb
 
@@ -36,7 +38,8 @@ jade
 
 
 启动服务端
-===============
+----------
+
 
 1.开启mongodb,在mongodb的安装目录下bin文件夹打开命令窗口输入mongod命令
 
