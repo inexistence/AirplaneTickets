@@ -134,7 +134,7 @@ Database.Object = function(className, obj){
 		var that = this;
 		if(obj){
 			for(var key in obj){
-				this.attributes[key] = obj;
+				this.attributes[key] = obj[key];
 			}
 		}
 		Ajax.post('/save',this,{
