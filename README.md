@@ -4,8 +4,7 @@ AirplaneTickets
 华南理工大学数据库大作业——机票预订系统
 
 
-技术
-------------
+##技术
 
 
 **数据库**：mongodb
@@ -28,8 +27,7 @@ body-parser
 jade
 
 
-环境搭建
----------------
+##环境搭建
 
 
 1.安装node、mongodb
@@ -37,8 +35,7 @@ jade
 2.在命令行输入npm install以安装需要的node模块
 
 
-启动服务端
-----------
+##启动服务端
 
 
 1.开启mongodb,在mongodb的安装目录下bin文件夹打开命令窗口输入mongod命令
