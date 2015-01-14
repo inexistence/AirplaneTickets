@@ -56,12 +56,12 @@ Database.Query = function(className,query){
 				callback.error({error:'can not find Class '+className})
 			return ;
 		}
-		if(query._id===undefined){
+		if(this._id===undefined){
 			if (callback&&callback.error)
 				callback.error({error:'can not find Object without id.'})
 			return ;
 		}
-		Class.findById(query._id, function(err,result){
+		Class.findById(this._id, function(err,result){
 			if(err){
 				if (callback&&callback.error)
 					callback.error({error:err,object:result});

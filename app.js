@@ -45,9 +45,69 @@ app.get('/',function(req, res) {
 
 app.get('/ticketDetail/:id',function(req, res) {
 	var id = req.params.id;
-	res.render('ticketDetail', {
-		title: '机票详情'
+	var date = new Date();
+	date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	var flight = {
+		flightNumber: "",//航班号
+		company: "",//公司
+		leaveTime:"",//出发时间
+		leaveDate:date,//出发日期
+		arrTime:"",//到达时间
+		arrDate:date,//到达日期
+		leaveAirport:"",//出发机场
+		leaveCity:"",//出发城市
+		arrAirport:"",//到达机场
+		arrCity:"",//到达城市
+		businessFare:"",//商务舱价格
+		businessCount:"0",//商务舱票数
+		firstFare:"",//头等舱价格
+		firstCount:"0",//头等舱数量
+		economyFare:"",//经济舱价格
+		economyCount:"0",//经济舱数量		
+	}
+	if(id != "-1"){
+		var query = new Database.Query("Flight");
+		query.get(id,{
+			success:function(result){
+				flight = result.attributes;
+				res.render('ticketDetail', {
+					title: '机票详情',
+					flight: flight
+				});
+			},error:function(err){
+				res.status(404).send(err);
+				res.end();
+			}
+		})
+	}else{
+		res.render('ticketDetail', {
+			title: '机票详情',
+			flight: flight
+		});
+	}
+});
+
+app.get('/ticketManage',function(req, res) {
+	res.render('ticketManage', {
+		title: '机票管理'
 	})
+});
+
+app.post('/admin/modify/:id',function(req,res){
+	var id = req.params.id;
+	var obj = req.body;
+	if(id!="undefined")obj._id = id;
+	var className = "Flight";
+	var object = new Database.Object(className, obj);
+	object.save(null,{
+		success:function(_obj){
+			res.redirect("/ticketManage");
+			res.end();
+		},error:function(error){
+			res.status(404).send(error);
+			res.end();
+		}
+	});
 });
 
 

@@ -1,3 +1,28 @@
+//-login dialog
+#login.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
+  .modal-dialog.modal-lg
+    .modal-content
+       .modal-header
+            button.close(type="button",data-dismiss="modal")
+              span(aria-hidden="true") ×
+              span.sr-only Close
+            h4.modal-title 登录
+       .modal-body body
+       .modal-footer
+         button.btn.btn-default 确定
+         button.btn.btn-default(data-dismiss="modal") 取消
+//-signup dialog
+#signup.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
+  .modal-dialog.modal-lg
+    .modal-content
+       .modal-header
+            button.close(type="button",data-dismiss="modal")
+              span(aria-hidden="true") ×
+              span.sr-only Close
+            h4.modal-title 注册
+       .modal-body body
+       .modal-footer footer
+
 header#top.navbar.navbar-static-top.bs-docs-nav(role="banner")
   .container
     .navbar-header
@@ -10,15 +35,15 @@ header#top.navbar.navbar-static-top.bs-docs-nav(role="banner")
     nav.collapse.navbar-collapse.bs-navbar-collapse(role=navigation)
       ul.nav.navbar-nav
         li
-          a(href="/") 旅客用户模块
+          a(href="/") 机票查询
         li
-          a(href="/") 航空公司模块
+          a(href="/") 订单
         li
-          a(href="/") 机场售票模块
+          a(href="/ticketManage") 机票管理
       ul.nav.navbar-nav.navbar-right
         li
-          a(href="http://job.bootcss.com",onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'doc-home-navbar-job'])",target="_blank") 登录
+          a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#login") 登录
         li
-          a(href="http://expo.bootcss.com",onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'doc-home-navbar-expo'])",target="_blank") 注册
+          a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#signup") 注册
         //- li
           //- a(href="http://blog.getbootstrap.com",onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'doc-home-navbar-blog'])",target="_blank") 官方博客

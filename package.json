@@ -10,6 +10,7 @@
     "jade": "*",
 	"underscore":"*",
 	"mongoose":"*",
-	"body-parser":"*"
+	"body-parser":"*",
+	"bcrypt":"*"
   }
 }

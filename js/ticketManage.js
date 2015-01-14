@@ -116,41 +116,22 @@ function($scope, Util, Database) {
 	countTotalPages();
 	$scope.queryByPage($scope.curPage);
 
-	var flight = new Database.Object('Flight',{
-		flightNumber: "SQ853 330(宽)",//航班号
-		company: "新加坡航空",//公司
-		leaveTime:"1:00",//出发时间
-		leaveDate:"2015-4-12",//出发日期
-		arrTime:"3:00",//到达时间
-		arrDate:"2015-4-13",//到达日期
-		leaveAirport:"新加坡机场",//出发机场
-		leaveCity:"新加坡",//出发城市
-		arrAirport:"北京国际机场",//到达机场
-		arrCity:"北京",//到达城市
-		businessFare:"¥150",//商务舱价格
-		businessCount:"100",//商务舱票数
-		firstFare:"¥150",//头等舱价格
-		firstCount:"100",//头等舱数量
-		economyFare:"¥150",//经济舱价格
-		economyCount:"100",//经济舱数量	
-	})
-	// flight.save();
-	// var flight = new Database.Object('Flight',{
-	// 	company:'马来西亚航空',
-	// 	planeName:'RP33 22(小)',
-	// 	flyDate:'2月1日 12:25',
-	// 	arrDate:'2月5日 23:15',
-	// 	flyTime:'约12小时',
-	// 	flyAirport:'上海白云国际机场',
-	// 	arrAirport:'马来西亚大海国际机场',
-	// 	fare:'¥222',
-	// 	tax:'¥111'
-	// });
+	
 
-	// flight.save({company:'地狱航空',flyAirport:'地狱机场'},{
-	// 	success:function(obj){
-	// 		console.log(obj);
-	// 	}
-	// });
+
+	//------机票管理------
+	$scope.delete = function(index){
+		var flight = $scope.flights[index];
+		flight.delete({
+			success:function(obj){
+				$scope.$apply(function(){
+					$scope.flights.splice(index,1);	
+				})
+				alert("删除成功");
+			},error:function(err){
+				alert(err.error);
+			}
+		});
+	};
 
 }]);

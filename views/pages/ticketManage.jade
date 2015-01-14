@@ -1,9 +1,9 @@
-//-首页
+//-机票管理
 //-继承通用模块
 extends ../layout
 
 block javascript
-	script(src="../js/index.js")
+	script(src="../js/ticketManage.js")
 	script(src="../lib/js/select2.js")
 	script(src="../lib/js/bootstrap-datepicker.js")
 
@@ -16,7 +16,7 @@ block content
 	div(ng-controller="indexCtrl")
 		.jumbotron.bs-docs-header
 			.container
-				h1(style="color:#fff") 机票查询
+				h1(style="color:#fff") 机票管理
 		.container
 			.row(style="padding:10px")
 				.col-xs-12.col-md-8
@@ -40,8 +40,10 @@ block content
 								input.span2.form-control(size="16",placeholder="到达时间",type="text",value="",readonly="")
 								span.add-on.input-group-addon
 									i.glyphicon.glyphicon-calendar
-				.col-xs-6.col-md-4
+				.col-xs-4.col-md-1
 					a.btn.btn-outline(id="search",ng-click="search()") 查询
+				.col-xs-4.col-md-1
+					a.btn.btn-outline(id="search",href="/ticketDetail/-1") 添加
 		.container
 			.row
 				table.table.table-hover.table-bordered
@@ -53,7 +55,8 @@ block content
 							th.text-center 经济舱
 							th.text-center 商务舱
 							th.text-center 头等舱
-							th.text-center 订票
+							th.text-center 修改
+							th.text-center 删除
 					tbody
 						//- each item in flights
 						tr(ng-repeat="item in flights")
@@ -81,8 +84,11 @@ block content
 								hr.half-rule
 								p 剩余{{item.attributes.firstCount}}张
 							td.text-center(style="vertical-align:middle")
-								a(target="_blank", href="/ticketDetail/3")
-									button.btn.btn-outline.del(type="button", data-id="{{item.attributes._id}}") 订票
+								a(target="_blank", href="/ticketDetail/{{item.attributes._id}}")
+									button.btn.btn-outline.del(type="button", data-id="{{item.attributes._id}}") 修改
+							td.text-center(style="vertical-align:middle")
+								a(target="_blank", href="")
+									button.btn.btn-outline.del(type="button",ng-click="delete($index)") 删除
 			nav.text-center
 				ul.pagination
 					//- li(ng-class="{disabled:pages[0]==1}")
