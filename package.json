@@ -11,6 +11,8 @@
 	"underscore":"*",
 	"mongoose":"*",
 	"body-parser":"*",
-	"bcrypt":"*"
+	"pbkdf2":"*",
+	"express-session":"*",
+	"cookie-parser":"*"
   }
 }

@@ -116,24 +116,24 @@ function($scope, Util, Database) {
 	countTotalPages();
 	$scope.queryByPage($scope.curPage);
 
-	var flight = new Database.Object('Flight',{
-		flightNumber: "SQ853 330(宽)",//航班号
-		company: "新加坡航空",//公司
-		leaveTime:"1:00",//出发时间
-		leaveDate:"2015-4-12",//出发日期
-		arrTime:"3:00",//到达时间
-		arrDate:"2015-4-13",//到达日期
-		leaveAirport:"新加坡机场",//出发机场
-		leaveCity:"新加坡",//出发城市
-		arrAirport:"北京国际机场",//到达机场
-		arrCity:"北京",//到达城市
-		businessFare:"¥150",//商务舱价格
-		businessCount:"100",//商务舱票数
-		firstFare:"¥150",//头等舱价格
-		firstCount:"100",//头等舱数量
-		economyFare:"¥150",//经济舱价格
-		economyCount:"100",//经济舱数量	
-	})
+	// var flight = new Database.Object('Flight',{
+	// 	flightNumber: "SQ853 330(宽)",//航班号
+	// 	company: "新加坡航空",//公司
+	// 	leaveTime:"1:00",//出发时间
+	// 	leaveDate:"2015-4-12",//出发日期
+	// 	arrTime:"3:00",//到达时间
+	// 	arrDate:"2015-4-13",//到达日期
+	// 	leaveAirport:"新加坡机场",//出发机场
+	// 	leaveCity:"新加坡",//出发城市
+	// 	arrAirport:"北京国际机场",//到达机场
+	// 	arrCity:"北京",//到达城市
+	// 	businessFare:"¥150",//商务舱价格
+	// 	businessCount:"100",//商务舱票数
+	// 	firstFare:"¥150",//头等舱价格
+	// 	firstCount:"100",//头等舱数量
+	// 	economyFare:"¥150",//经济舱价格
+	// 	economyCount:"100",//经济舱数量	
+	// })
 	// flight.save();
 	// var flight = new Database.Object('Flight',{
 	// 	company:'马来西亚航空',

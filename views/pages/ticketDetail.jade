@@ -1,74 +1,75 @@
 extends ../layout
 
 block javascript
-	
+	script(src="../js/ticketDetail.js")
 
 block css
 	
 
 block content
-	.jumbotron.bs-docs-header
+	div(ng-controller="ticketDetailCtrl")
+		.jumbotron.bs-docs-header
+			.container
+				h1(style="color:#fff") 机票详情
 		.container
-			h1(style="color:#fff") 机票详情
-	.container
-		.row
-			form.form-horizontal(method="post", action="/admin/modify/#{flight._id}")
-				.form-group
-					label.col-sm-2.control-label(for="inputCompany") 航班公司
-					.col-sm-4
-						input#inputCompany.form-control(type="text", name="company", value="#{flight.company}")
-					label.col-sm-2.control-label(for="inputFlightNumber") 航班号
-					.col-sm-4
-						input#inputFlightNumber.form-control(type="text", name="flightNumber", value="#{flight.flightNumber}")
-				.form-group
-					label.col-sm-2.control-label(for="inputLeaveDate") 出发日期
-					.col-sm-4
-						input#inputLeaveDate.form-control(type="text", name="leaveDate", value="#{flight.leaveDate}")
-					label.col-sm-2.control-label(for="inputLeaveTime") 出发时间
-					.col-sm-4
-						input#inputLeaveTime.form-control(type="text", name="leaveTime", value="#{flight.leaveTime}")
-				.form-group
-					label.col-sm-2.control-label(for="inputArrDate") 到达日期
-					.col-sm-4
-						input#inputArrDate.form-control(type="text", name="arrDate", value="#{flight.arrDate}")
-					label.col-sm-2.control-label(for="inputArrTime") 到达时间
-					.col-sm-4
-						input#inputArrTime.form-control(type="text", name="arrTime", value="#{flight.arrTime}")
-				.form-group
-					label.col-sm-2.control-label(for="inputLeaveCity") 出发城市
-					.col-sm-4
-						input#inputLeaveCity.form-control(type="text", name="leaveCity", value="#{flight.leaveCity}")
-					label.col-sm-2.control-label(for="inputLeaveAirport") 出发机场
-					.col-sm-4
-						input#inputLeaveAirport.form-control(type="text", name="leaveAirport", value="#{flight.leaveAirport}")
-				.form-group
-					label.col-sm-2.control-label(for="inputArrCity") 到达城市
-					.col-sm-4
-						input#inputArrCity.form-control(type="text", name="arrCity", value="#{flight.arrCity}")
-					label.col-sm-2.control-label(for="inputArrAirport") 到达机场
-					.col-sm-4
-						input#inputArrAirport.form-control(type="text", name="arrAirport", value="#{flight.arrAirport}")
-				.form-group
-					label.col-sm-2.control-label(for="inputEconomyCount") 经济舱票数
-					.col-sm-4
-						input#inputEconomyCount.form-control(type="text", name="economyCount", value="#{flight.economyCount}")
-					label.col-sm-2.control-label(for="inputEconomyFare") 经济舱价格
-					.col-sm-4
-						input#inputEconomyFare.form-control(type="text", name="economyFare", value="#{flight.economyFare}")
-				.form-group
-					label.col-sm-2.control-label(for="inputBusinessCount") 商务舱票数
-					.col-sm-4
-						input#inputBusinessCount.form-control(type="text", name="businessCount", value="#{flight.businessCount}")
-					label.col-sm-2.control-label(for="inputBusinessFare") 商务舱价格
-					.col-sm-4
-						input#inputBusinessFare.form-control(type="text", name="businessFare", value="#{flight.businessFare}")
-				.form-group
-					label.col-sm-2.control-label(for="inputFirstCount") 头等舱票数
-					.col-sm-4
-						input#inputFirstCount.form-control(type="text", name="firstCount", value="#{flight.firstCount}")
-					label.col-sm-2.control-label(for="inputFirstFare") 头等舱价格
-					.col-sm-4
-						input#inputFirstFare.form-control(type="text", name="firstFare", value="#{flight.firstFare}")
-				.form-group
-					.col-sm-offset-1.col-sm-10
-						button.btn.btn-default(type="submit") 录入
+			.row
+				form.form-horizontal(method="post", action="/admin/modify/#{flight._id}")
+					.form-group
+						label.col-sm-2.control-label(for="inputCompany") 航班公司
+						.col-sm-4
+							input#inputCompany.form-control(type="text", name="company", value="#{flight.company}")
+						label.col-sm-2.control-label(for="inputFlightNumber") 航班号
+						.col-sm-4
+							input#inputFlightNumber.form-control(type="text", name="flightNumber", value="#{flight.flightNumber}")
+					.form-group
+						label.col-sm-2.control-label(for="inputLeaveDate") 出发日期
+						.col-sm-4
+							input#inputLeaveDate.form-control(type="text", name="leaveDate", value="#{flight.leaveDate}")
+						label.col-sm-2.control-label(for="inputLeaveTime") 出发时间
+						.col-sm-4
+							input#inputLeaveTime.form-control(type="text", name="leaveTime", value="#{flight.leaveTime}")
+					.form-group
+						label.col-sm-2.control-label(for="inputArrDate") 到达日期
+						.col-sm-4
+							input#inputArrDate.form-control(type="text", name="arrDate", value="#{flight.arrDate}")
+						label.col-sm-2.control-label(for="inputArrTime") 到达时间
+						.col-sm-4
+							input#inputArrTime.form-control(type="text", name="arrTime", value="#{flight.arrTime}")
+					.form-group
+						label.col-sm-2.control-label(for="inputLeaveCity") 出发城市
+						.col-sm-4
+							input#inputLeaveCity.form-control(type="text", name="leaveCity", value="#{flight.leaveCity}")
+						label.col-sm-2.control-label(for="inputLeaveAirport") 出发机场
+						.col-sm-4
+							input#inputLeaveAirport.form-control(type="text", name="leaveAirport", value="#{flight.leaveAirport}")
+					.form-group
+						label.col-sm-2.control-label(for="inputArrCity") 到达城市
+						.col-sm-4
+							input#inputArrCity.form-control(type="text", name="arrCity", value="#{flight.arrCity}")
+						label.col-sm-2.control-label(for="inputArrAirport") 到达机场
+						.col-sm-4
+							input#inputArrAirport.form-control(type="text", name="arrAirport", value="#{flight.arrAirport}")
+					.form-group
+						label.col-sm-2.control-label(for="inputEconomyCount") 经济舱票数
+						.col-sm-4
+							input#inputEconomyCount.form-control(type="text", name="economyCount", value="#{flight.economyCount}")
+						label.col-sm-2.control-label(for="inputEconomyFare") 经济舱价格
+						.col-sm-4
+							input#inputEconomyFare.form-control(type="text", name="economyFare", value="#{flight.economyFare}")
+					.form-group
+						label.col-sm-2.control-label(for="inputBusinessCount") 商务舱票数
+						.col-sm-4
+							input#inputBusinessCount.form-control(type="text", name="businessCount", value="#{flight.businessCount}")
+						label.col-sm-2.control-label(for="inputBusinessFare") 商务舱价格
+						.col-sm-4
+							input#inputBusinessFare.form-control(type="text", name="businessFare", value="#{flight.businessFare}")
+					.form-group
+						label.col-sm-2.control-label(for="inputFirstCount") 头等舱票数
+						.col-sm-4
+							input#inputFirstCount.form-control(type="text", name="firstCount", value="#{flight.firstCount}")
+						label.col-sm-2.control-label(for="inputFirstFare") 头等舱价格
+						.col-sm-4
+							input#inputFirstFare.form-control(type="text", name="firstFare", value="#{flight.firstFare}")
+					.form-group
+						.col-sm-offset-1.col-sm-10
+							button.btn.btn-default(type="submit") 录入

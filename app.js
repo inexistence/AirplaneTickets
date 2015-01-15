@@ -5,26 +5,43 @@ var _ = require('underscore');
 var mongoose = require('mongoose');
 //处理post中的data数据
 var bodyParser = require('body-parser');
+var session = require('express-session'); //如果要使用session，需要单独包含这个模块
+var cookieParser = require('cookie-parser'); //如果要使用cookie，需要显式包含这个模块
 //-------------------------
 
 
 //引用自己写的服务端的数据库Module
+var Helper = require('./helper.js')
 //包含Database.Query&Database.Object
 var Database = require('./database/databaseModule');
 
 //连接本地数据库airplaneTickets
 mongoose.connect('mongodb://localhost/airplaneTickets');
 
-
 var app = express();
 
-//使前端post来的数据能从req.body中取得
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(__dirname));
-//设置视图根目录
-app.set('views', './views/pages');
-//设置默认模版引擎
-app.set('view engine', 'jade');
+
+/*
+Middlewares and configurations 
+*/
+app.configure = function () {
+    app.use(cookieParser('Authentication Tutorial '));
+    app.use(session({
+    	resave:false,
+    	saveUninitialized:false,
+    	secret: 'airplaneticket'
+    }));
+
+    //使前端post来的数据能从req.body中取得
+	app.use(bodyParser.urlencoded({extended: false}));
+	app.use(express.static(__dirname));
+	//设置视图根目录
+	app.set('views', './views/pages');
+	//设置默认模版引擎
+	app.set('view engine', 'jade');
+};
+app.configure();
+
 
 
 var port = process.env.PORT || 80;
@@ -33,21 +50,33 @@ app.listen(port);
 
 console.log('airplaneTickets started on port '+port);
 
+function getRenderData(req){
+	var result = {};
+	var user = req.session.user;
+	if(user){
+		result.user = {username:user.username,role:user.role};
+		result.user = JSON.stringify(result.user);
+	}
+	return result;
+}
+
 
 // 编写路由
 
 // index page
-app.get('/',function(req, res) {
-	res.render('index', {
-		title: '机票查询'
-	});
+app.get('/',function(req, res) {	
+	var data = getRenderData(req);
+	data.title = '机票查询';
+	res.render('index', data);
 });
 
-app.get('/ticketDetail/:id',function(req, res) {
+app.get('/ticketDetail/:id',Helper.adminAuth,function(req, res) {
 	var id = req.params.id;
+	var data = getRenderData(req);
+	data.title = '机票详情';
 	var date = new Date();
 	date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-	var flight = {
+	data.flight = {
 		flightNumber: "",//航班号
 		company: "",//公司
 		leaveTime:"",//出发时间
@@ -69,31 +98,25 @@ app.get('/ticketDetail/:id',function(req, res) {
 		var query = new Database.Query("Flight");
 		query.get(id,{
 			success:function(result){
-				flight = result.attributes;
-				res.render('ticketDetail', {
-					title: '机票详情',
-					flight: flight
-				});
+				data.flight = result.attributes;
+				res.render('ticketDetail', data);
 			},error:function(err){
 				res.status(404).send(err);
 				res.end();
 			}
 		})
 	}else{
-		res.render('ticketDetail', {
-			title: '机票详情',
-			flight: flight
-		});
+		res.render('ticketDetail', data);
 	}
 });
 
-app.get('/ticketManage',function(req, res) {
-	res.render('ticketManage', {
-		title: '机票管理'
-	})
+app.get('/ticketManage',Helper.adminAuth,function(req, res) {
+	var data = getRenderData(req);
+	data.title = '机票管理';
+	res.render('ticketManage', data);
 });
 
-app.post('/admin/modify/:id',function(req,res){
+app.post('/admin/modify/:id',Helper.adminAuth,function(req,res){
 	var id = req.params.id;
 	var obj = req.body;
 	if(id!="undefined")obj._id = id;
@@ -101,23 +124,83 @@ app.post('/admin/modify/:id',function(req,res){
 	var object = new Database.Object(className, obj);
 	object.save(null,{
 		success:function(_obj){
-			res.redirect("/ticketManage");
+			res.redirect("/ticketDetail/"+_obj.attributes._id+"?success=true");
 			res.end();
+			return;
 		},error:function(error){
-			res.status(404).send(error);
+			res.redirect("/ticketDetail/"+_obj.attributes._id+"?success=false");
 			res.end();
+			return ;
 		}
 	});
 });
 
+//登录
+app.post('/login',function(req,res){
+	// console.log(req.originalUrl);
+	Helper.authenticate(req.body.username,req.body.password,function(err,user){
+		 if (user) {
+            req.session.regenerate(function () {
+                req.session.user = user;
+                req.session.success = 'Authenticated as ' + user.username + ' click to <a href="/logout">logout</a>. ' + ' You may now access <a href="/restricted">/restricted</a>.';
+                // res.redirect('/?success='+req.session.success);
+                var frontUser = {username:user.username,role:user.role};
+                res.send({user:frontUser});
+                return ;
+            });
+        } else {
+            req.session.error = 'Authentication failed, please check your ' + ' username and password.';
+            res.send({error:req.session.error});
+            return;
+            // res.redirect('/?error='+req.session.error);
+        }
+	})
+
+})
+//注册
+app.post('/signup',function(req,res){
+	Helper.userExist(req.body.username,function(err,exist){
+		if(err||exist){
+			res.send({error:err});
+			res.end();
+		} else {
+			var object = new Database.Object("User", {
+				username:req.body.username,
+				password:req.body.password,
+				role:req.body.role
+			});
+			object.save(null,{
+				success:function(_obj){
+					var frontUser = {username:_obj.attributes.username,role:_obj.attributes.role};
+               		res.send({user:frontUser});
+					res.end();
+				},error:function(error){
+					res.status(404).send({error:error});
+					res.end();
+				}
+			});
+		}
+	});
+})
+
+//注销
+app.get('/logout', function (req, res) {
+    req.session.destroy(function () {
+        res.send('success');
+        res.end();
+    });
+});
 
 /*******对前端发送来的数据库请求进行处理******/
+/****为保证用户数据安全，以下函数操作设置为不可对用户信息进行****/
 
 //根据条件查找数据
+//不可处理用户表
 app.get('/findData',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
 	var className = q.className;
+	if(Helper.noUserClassAuth(className,req,res))return ;
 	var query = new Database.Query(className,q);
 	query.find({
 		success:function(obj){
@@ -131,10 +214,12 @@ app.get('/findData',function(req,res){
 });
 
 //根据id获取记录
+//不可处理用户表
 app.get('/getData',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
 	var className = q.className;
+	if(Helper.noUserClassAuth(className,req,res))return ;
 	var query = new Database.Query(className,q);
 	query.get(q._id,{
 		success:function(result){
@@ -152,6 +237,7 @@ app.get('/count',function(req,res){
 	var q = req.query.data;
 	q = JSON.parse(q);
 	var className = q.className;
+	if(Helper.noUserClassAuth(className,req,res))return ;
 	var query = new Database.Query(className,q);
 	query.count({
 		success:function(result){
@@ -165,7 +251,8 @@ app.get('/count',function(req,res){
 });
 
 //保存数据(新建&修改)
-app.post('/save',function(req,res){
+//需要管理员权限
+app.post('/save',Helper.adminAuth,function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
 	var className = obj.className;
@@ -182,7 +269,8 @@ app.post('/save',function(req,res){
 });
 
 //删除单个数据
-app.post('/removeById',function(req,res){
+//需要管理员权限
+app.post('/removeById',Helper.adminAuth,function(req,res){
 	var obj = req.body.data;
 	obj = JSON.parse(obj);
 	var className = obj.className;

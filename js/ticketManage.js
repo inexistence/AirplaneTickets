@@ -129,7 +129,8 @@ function($scope, Util, Database) {
 				})
 				alert("删除成功");
 			},error:function(err){
-				alert(err.error);
+				console.log(err)
+				alert(err.responseText);
 			}
 		});
 	};

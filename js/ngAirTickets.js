@@ -3,7 +3,11 @@
 app.factory('Util', ['$window',
 function(win) {
 	var Util = {};
-	
+	Util.getQueryString = function(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	    var r = win.location.search.substr(1).match(reg);
+	    if (r != null) return unescape(r[2]); return null;
+    }
 	return Util;
 }]);
 

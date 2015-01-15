@@ -1,49 +1,83 @@
-//-login dialog
-#login.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
-  .modal-dialog.modal-lg
-    .modal-content
-       .modal-header
-            button.close(type="button",data-dismiss="modal")
-              span(aria-hidden="true") ×
-              span.sr-only Close
-            h4.modal-title 登录
-       .modal-body body
-       .modal-footer
-         button.btn.btn-default 确定
-         button.btn.btn-default(data-dismiss="modal") 取消
-//-signup dialog
-#signup.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
-  .modal-dialog.modal-lg
-    .modal-content
-       .modal-header
-            button.close(type="button",data-dismiss="modal")
-              span(aria-hidden="true") ×
-              span.sr-only Close
-            h4.modal-title 注册
-       .modal-body body
-       .modal-footer footer
+script(src="../js/header.js")
+div(ng-controller="headerCtrl")
+  //-login dialog
+  #login.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
+    .modal-dialog.modal-sm
+      .modal-content
+         .modal-header
+              button.close(type="button",data-dismiss="modal")
+                span(aria-hidden="true") ×
+                span.sr-only Close
+              h4.modal-title 登录
+         .modal-body
+            form#loginForm.form-horizontal(method="POST", action="/login")
+              .form-group
+                lable.col-sm-3.control-label(for='lusername') 用户名
+                .col-sm-8
+                  input#lusername.form-control(type='text', name='username')
+              .form-group
+                lable.col-sm-3.control-label(for='lpassword') 密码
+                .col-sm-8
+                  input#lpassword.form-control(type='password', name='password')
+              //- input(type="submit", value="Log In")
+         .modal-footer
+           button.btn.btn-default(ng-click="login()") 确定
+           button.btn.btn-default(data-dismiss="modal") 取消
+  //-signup dialog
+  #signup.modal.fade(tabindex="-1",role="dialog",aria-labelledby="",aria-hidden="true")
+    .modal-dialog.modal-sm
+      .modal-content
+         .modal-header
+              button.close(type="button",data-dismiss="modal")
+                span(aria-hidden="true") ×
+                span.sr-only Close
+              h4.modal-title 注册
+         .modal-body
+            form#signupForm.form-horizontal(method="POST", action="/signup")
+              .form-group
+                lable.col-sm-3.control-label(for='srole') 角色
+                .col-sm-8
+                  input#srole.form-control(type='text', name='role', placeholder="admin/user")
+              .form-group
+                lable.col-sm-3.control-label(for='susername') 用户名
+                .col-sm-8
+                  input#susername.form-control(type='text', name='username')
+              .form-group
+                lable.col-sm-3.control-label(for='spassword') 密码
+                .col-sm-8
+                  input#spassword.form-control(type='password', name='password')
+              //- input(type="submit", value="Sign UP")
+         .modal-footer
+           button.btn.btn-default(ng-click="signup()") 确定
+           button.btn.btn-default(data-dismiss="modal") 取消
 
-header#top.navbar.navbar-static-top.bs-docs-nav(role="banner")
-  .container
-    .navbar-header
-      button.navbar-toggle.collapsed(type="button",data-toggle="collapse",data-target=".bs-navbar-collapse") 
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href="../") 机票预定系统
-    nav.collapse.navbar-collapse.bs-navbar-collapse(role=navigation)
-      ul.nav.navbar-nav
-        li
-          a(href="/") 机票查询
-        li
-          a(href="/") 订单
-        li
-          a(href="/ticketManage") 机票管理
-      ul.nav.navbar-nav.navbar-right
-        li
-          a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#login") 登录
-        li
-          a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#signup") 注册
-        //- li
-          //- a(href="http://blog.getbootstrap.com",onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'doc-home-navbar-blog'])",target="_blank") 官方博客
+  header#top.navbar.navbar-static-top.bs-docs-nav(role="banner")
+    .container
+      .navbar-header
+        button.navbar-toggle.collapsed(type="button",data-toggle="collapse",data-target=".bs-navbar-collapse") 
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="../") 机票预定系统
+      nav.collapse.navbar-collapse.bs-navbar-collapse(role=navigation)
+        ul.nav.navbar-nav
+          li
+            a(href="/") 机票查询
+          li(ng-if="user")
+            a(href="/") 订单
+          li(ng-if="user&&user.role=='admin'")
+            a(href="/ticketManage") 机票管理
+        ul.nav.navbar-nav.navbar-right
+          li(id="jadeuser" style="display:none") #{user}
+          li(ng-if="!user")
+            a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#login") 登录
+          li(ng-if="user")
+            a(href="",onclick="",target="_blank") {{user.username}}
+            ul
+              li(ng-click="logout()")
+                a(href="") 注销
+          li
+            a(href="",onclick="",target="_blank",data-toggle="modal",data-target="#signup") 注册
+          //- li
+            //- a(href="http://blog.getbootstrap.com",onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'doc-home-navbar-blog'])",target="_blank") 官方博客
