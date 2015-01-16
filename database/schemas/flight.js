@@ -14,11 +14,11 @@ var FlightSchema = new mongoose.Schema(_.extend({
 		arrAirport:String,//到达机场
 		arrCity:String,//到达城市
 		businessFare:String,//商务舱价格
-		businessCount:String,//商务舱票数
+		businessCount:Number,//商务舱票数
 		firstFare:String,//头等舱价格
-		firstCount:String,//头等舱数量
+		firstCount:Number,//头等舱数量
 		economyFare:String,//经济舱价格
-		economyCount:String,//经济舱数量		
+		economyCount:Number,//经济舱数量		
 },BaseSchema.data));
 
 //每次存储数据前都会调用这个方法

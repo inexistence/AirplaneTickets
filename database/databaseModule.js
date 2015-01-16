@@ -25,6 +25,7 @@ Database.Query = function(className,query){
 		this.skipNum = skip;
 	};
 	this.find = function(callback){
+		var query = this;
 		var Class = Models.getClass(className);
 		if(Class===undefined){
 			if(callback&&callback.error)

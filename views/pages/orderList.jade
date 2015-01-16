@@ -1,0 +1,44 @@
+//-继承通用模块
+extends ../layout
+
+block javascript
+	script(src="../js/orderList.js")
+
+block css
+	//- link(href="../lib/css/select2.css", rel="stylesheet")
+
+block content
+	div(ng-controller="orderListCtrl")
+		.jumbotron.bs-docs-header
+			.container
+				h1(style="color:#fff") 历史订单
+		.container
+			if orderList.length==0
+				p.text-center(style="margin:130px 0;") 你还没有订过单哦~
+			each order in orderList
+				table.table.table-hover.table-bordered(style="margin-bottom:40px;")
+					tbody
+						tr
+							td.text-center.vertical-center
+								p #{order.orderDate}
+							td.text-center.vertical-center
+								p #{order.flightId.company}
+								p #{order.flightId.flightNumber}
+							td.text-center.vertical-center
+								p <span style="margin-right:15px;">起飞</span> #{order.flightId.leaveDate} #{order.flightId.leaveTime} #{order.flightId.leaveAirport}
+								hr.full-rule
+								p <span style="margin-right:15px;">到达</span> #{order.flightId.arrDate} #{order.flightId.arrTime} #{order.flightId.arrAirport}
+							td.text-center.vertical-center
+								case order.level
+									when 'first'
+										p 头等舱
+									when 'business'
+										p 商务舱
+									when 'economy'
+										p 经济舱
+							td.text-center.vertical-center
+								a(target="_blank", ng-click="", href="/orderDetail/#{order._id}")
+									button.btn.btn-outline.del(type="button") 查看
+							td.text-center.vertical-center
+								a(ng-click="", href="")
+									button.btn.btn-outline.del(type="button",ng-click="delOrder('#{order._id}')") 删除

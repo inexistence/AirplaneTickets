@@ -1,0 +1,15 @@
+
+.half-rule {
+	margin: 0 auto 10px auto;
+}
+
+.full-rule {
+	width:80%; 
+	margin: 0 auto 10px auto;
+}
+.table>tbody>tr>td{
+	vertical-align: middle;
+}
+.vertical-center{
+	vertical-align: middle;
+}

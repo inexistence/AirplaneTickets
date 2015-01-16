@@ -65,7 +65,7 @@ div(ng-controller="headerCtrl")
           li
             a(href="/") 机票查询
           li(ng-if="user")
-            a(href="/") 订单
+            a(href="/orderList") 历史订单
           li(ng-if="user&&user.role=='admin'")
             a(href="/ticketManage") 机票管理
         ul.nav.navbar-nav.navbar-right

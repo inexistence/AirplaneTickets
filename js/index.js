@@ -1,15 +1,15 @@
 
 $(document).ready(function(){
 
-	$("#leaveCity").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'北京'},{id:3,text:'上海'},{id:4,text:'马来西亚'},{id:5,text:'天空'},{id:6,text:'地狱'},{id:7,text:'新加坡'}]
-	});
-	$("#arrCity").select2({
-		data:[{id:0,text:'广州'},{id:2,text:'北京'},{id:3,text:'上海'},{id:4,text:'马来西亚'},{id:5,text:'天空'},{id:6,text:'地狱'},{id:7,text:'新加坡'}]
-	});
+	// $("#leaveCity").select2({
+	// 	data:[{id:0,text:'广州'},{id:2,text:'北京'},{id:3,text:'上海'},{id:4,text:'马来西亚'},{id:5,text:'天空'},{id:6,text:'地狱'},{id:7,text:'新加坡'}]
+	// });
+	// $("#arrCity").select2({
+	// 	data:[{id:0,text:'广州'},{id:2,text:'北京'},{id:3,text:'上海'},{id:4,text:'马来西亚'},{id:5,text:'天空'},{id:6,text:'地狱'},{id:7,text:'新加坡'}]
+	// });
 	
 	 $('#startDatepicker').datepicker();
-	 $('#endDatepicker').datepicker();
+	 // $('#endDatepicker').datepicker();
 });
 
 app.controller("indexCtrl", ['$scope', 'Util','Database',
@@ -75,6 +75,7 @@ function($scope, Util, Database) {
 					$scope.flights = results;
 					activePageFun($scope.curPage-1);
 					// results[0].delete();
+					console.log(results)
 				});
 			},error:function(error){
 				console.log("error");
@@ -84,23 +85,25 @@ function($scope, Util, Database) {
 	};
 
 	$scope.search = function(){
-		if($("#leaveCity").select2("data")==null){
-			alert("请选择出发地");
-			return ;
-		}
-		if($("#arrCity").select2("data")==null){
-			alert("请选择目的地");
-			return ;
-		}
-		//id
-		var startId = $("#leaveCity").val();
-		//value
-		leaveCity = $("#leaveCity").select2("data").text;
+		// if($("#leaveCity").select2("data")==null){
+		// 	alert("请选择出发地");
+		// 	return ;
+		// }
+		// if($("#arrCity").select2("data")==null){
+		// 	alert("请选择目的地");
+		// 	return ;
+		// }
+		// //id
+		// var startId = $("#leaveCity").val();
+		// //value
+		// leaveCity = $("#leaveCity").select2("data").text;
 
-		//id
-		var endId = $("#arrCity").val();
-		//value
-		arrCity = $("#arrCity").select2("data").text;
+		// //id
+		// var endId = $("#arrCity").val();
+		// //value
+		// arrCity = $("#arrCity").select2("data").text;
+		leaveCity = $("#leaveCity").val();
+		arrCity = $("#arrCity").val();
 
 		var startDate = $("#startDatepicker").datepicker('getDate');
 		if(startDate&&leaveDate!="Invalid Date")
@@ -116,41 +119,20 @@ function($scope, Util, Database) {
 	countTotalPages();
 	$scope.queryByPage($scope.curPage);
 
-	// var flight = new Database.Object('Flight',{
-	// 	flightNumber: "SQ853 330(宽)",//航班号
-	// 	company: "新加坡航空",//公司
-	// 	leaveTime:"1:00",//出发时间
-	// 	leaveDate:"2015-4-12",//出发日期
-	// 	arrTime:"3:00",//到达时间
-	// 	arrDate:"2015-4-13",//到达日期
-	// 	leaveAirport:"新加坡机场",//出发机场
-	// 	leaveCity:"新加坡",//出发城市
-	// 	arrAirport:"北京国际机场",//到达机场
-	// 	arrCity:"北京",//到达城市
-	// 	businessFare:"¥150",//商务舱价格
-	// 	businessCount:"100",//商务舱票数
-	// 	firstFare:"¥150",//头等舱价格
-	// 	firstCount:"100",//头等舱数量
-	// 	economyFare:"¥150",//经济舱价格
-	// 	economyCount:"100",//经济舱数量	
-	// })
-	// flight.save();
-	// var flight = new Database.Object('Flight',{
-	// 	company:'马来西亚航空',
-	// 	planeName:'RP33 22(小)',
-	// 	flyDate:'2月1日 12:25',
-	// 	arrDate:'2月5日 23:15',
-	// 	flyTime:'约12小时',
-	// 	flyAirport:'上海白云国际机场',
-	// 	arrAirport:'马来西亚大海国际机场',
-	// 	fare:'¥222',
-	// 	tax:'¥111'
-	// });
-
-	// flight.save({company:'地狱航空',flyAirport:'地狱机场'},{
-	// 	success:function(obj){
-	// 		console.log(obj);
-	// 	}
-	// });
+	//跳转到订单编辑页面
+	$scope.newOrder = function(id){
+		var levelRadio = $(".levelRadio");
+		var level;
+		for(var i = 0; i < levelRadio.length; i++){
+			if(levelRadio[i].checked){
+				level = levelRadio[i].value;
+			}
+		}
+		if(level==null){
+			alert("请选择舱位等级!");
+			return ;
+		}
+		window.location.href = "/newOrder?flightId="+id+"&flightLevel="+ level;
+	}
 
 }]);

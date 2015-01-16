@@ -14,7 +14,7 @@ function($scope, Util, Database) {
 			data:{username:username,password:password},
 			success:function(data, status, headers, config) {
 				if(data.user){
-					alert("登录成功！");
+					// alert("登录成功！");
 					$scope.$apply(function(){
 						$scope.user = data.user;	
 					})
@@ -32,6 +32,18 @@ function($scope, Util, Database) {
 		var role = $("#srole").val();
 		var username = $("#susername").val();
 		var password = $("#spassword").val();
+		if(role)
+			role = $.trim(role);
+		if(role==null||role.length==0)
+			role = undefined;
+		if(username)
+			username = $.trim(username);
+		if(password)
+			password = $.trim(password);
+		if(username==null||password==null||username.length==0||password.length==0){
+			alert("请先填写用户名和密码！");
+			return ;
+		}
 		$.ajax({
 			type:'POST',
 			url:'/signup',

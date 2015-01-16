@@ -43,6 +43,7 @@
 
 .datepicker {
 }
-.half-rule {
-	margin: 0 auto 10px auto;
+
+.levelRadio {
+	float: left;
 }

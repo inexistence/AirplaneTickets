@@ -1,0 +1,88 @@
+//-继承通用模块
+extends ../layout
+
+block javascript
+	script(src="../js/newOrder.js")
+	script(src="../lib/js/select2.js")
+
+block css
+	link(href="../css/newOrder.css", rel="stylesheet")
+	link(href="../lib/css/select2.css", rel="stylesheet")
+block content
+	div.container(ng-controller="newOrderCtrl",style="margin-top:30px;")
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title #{flight.leaveCity} - #{flight.arrCity}
+					span(style="float:right;font-size:20px;") ¥
+						span#fare #{fare}
+			div.panel-body
+				table.table.table-hover.table-bordered
+					tbody
+						tr
+							td.text-center
+								p #{flight.company}
+								p #{flight.flightNumber}
+							td.text-center
+								p <span style="margin-right:15px;">起飞</span> #{flight.leaveDate} #{flight.leaveTime} #{flight.leaveAirport}
+								hr.full-rule
+								p <span style="margin-right:15px;">到达</span> #{flight.arrDate} #{flight.arrTime} #{flight.arrAirport}
+							td.text-center
+								p #{level}
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title 乘客信息 <span style="font-size:10px;margin-left:10px;">请准确填写乘机人信息，以免在办理登机时发生问题。</span>
+			div.panel-body
+				form.form-horizontal
+					.form-group
+						label.col-sm-2.control-label 乘客姓名
+						.col-md-4
+							input.form-control(ng-model="passengerInfo.name")
+					.form-group
+						label.col-sm-2.control-label 证件类型
+						.col-sm-2
+							#id-type.select2-container.select-box(placeholder="请选择")
+						.col-md-4
+							input.form-control(ng-model="passengerInfo.identity.number")
+					.form-group
+						label.col-sm-2.control-label 证件签发地
+						.col-sm-4
+							input.form-control(ng-model="passengerInfo.identity.place")
+					.form-group
+						label.col-sm-2.control-label 国籍
+						.col-sm-4
+							input.form-control(ng-model="passengerInfo.country")
+					.form-group
+						label.col-sm-2.control-label 乘客类型
+						div(style="float:left;margin:5px 6px;")
+							input.ageLevel(type="radio",value="adult",name="ageLevel",checked)
+							span 成人
+						div(style="float:left;margin:5px 6px;")
+							input.ageLevel(type="radio",value="child",name="ageLevel")
+							span 儿童
+					.form-group
+						label.col-sm-2.control-label 性别
+						div(style="float:left;margin:5px 6px;")
+							input.sex(type="radio",value="male",name="sex",checked)
+							span 男
+						div(style="float:left;margin:5px 6px;")
+							input.sex(type="radio",value="female",name="sex")
+							span 女
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title 联系人信息 <span style="font-size:10px;margin-left:10px;">请准确填写联系人信息，以便我们与您联系。</span>
+			div.panel-body
+				form.form-horizontal
+					.form-group
+						label.col-sm-2.control-label 姓名
+						.col-md-4
+							input.form-control(ng-model="contactInfo.name")
+					.form-group
+						label.col-sm-2.control-label 手机号码
+						.col-sm-4
+							input.form-control(ng-model="contactInfo.phoneNumber",placeholder="非常重要，请认真填写")
+					.form-group
+						label.col-sm-2.control-label 电子邮箱
+						.col-sm-4
+							input.form-control(ng-model="contactInfo.email")
+		div.text-center
+			button.btn.btn-info(ng-click="submitOrder()",style="padding-left:30px; padding-right:30px;") 提交订单

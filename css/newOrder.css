@@ -1,0 +1,14 @@
+body {
+	background-color: #eee;
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.select-box {
+	width:100%;
+	margin-left: 5px;
+	margin-right: 5px;
+	/*margin-bottom: 10px;*/
+}

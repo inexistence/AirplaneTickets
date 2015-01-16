@@ -19,16 +19,6 @@ Helper.authenticate = function (name, pass, fn) {
     });
 
 }
-//需要登录
-Helper.requiredAuthentication = function(req, res, next) {
-    if (req.session.user) {
-        next();
-    } else {
-        req.session.error = 'Access denied!';
-        res.redirect('/');
-    }
-}
-
 
 //判断用户是否已经存在
 //false 不存在
@@ -71,5 +61,17 @@ Helper.adminAuth = function(req,res,next){
         res.end();
     }
 }
+
+//需要登录
+Helper.requiredAuthentication = function(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(500).send({error:"请先登录!"});
+        res.end();
+    }
+}
+
+
 
 module.exports = Helper;

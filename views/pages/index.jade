@@ -23,10 +23,12 @@ block content
 					.row.form-group
 						.col-xs-6
 							//- label.col-sm-2.control-label 出发地
-							#leaveCity.select2-container.select-box(placeholder="出发地")
+							//- #leaveCity.select2-container.select-box(placeholder="出发地")
+							input#leaveCity.form-control(placeholder="出发地")
 						.col-xs-6
 							//- label.col-sm-2.control-label 目的地
-							#arrCity.select2-container.select-box(placeholder="目的地")
+							//- #arrCity.select2-container.select-box(placeholder="目的地")
+							input#arrCity.form-control(placeholder="目的地")
 					.row.form-group
 						.col-xs-6
 							//- label.col-sm-2.control-label 出发时间
@@ -61,28 +63,32 @@ block content
 								p {{item.attributes.company}}
 								p {{item.attributes.flightNumber}}
 							td.text-center
-								p {{item.attributes.leaveDate}} {{item.attributes.leaveTime}}
+								p {{item.attributes.leaveDate}}&nbsp;&nbsp;&nbsp;{{item.attributes.leaveTime}}
 								hr.half-rule
-								p {{item.attributes.arrDate}} {{item.attributes.arrTime}}
+								p {{item.attributes.arrDate}}&nbsp;&nbsp;&nbsp;{{item.attributes.arrTime}}
 							td.text-center
-								p {{item.attributes.leaveCity}} {{item.attributes.leaveAirport}}
+								p {{item.attributes.leaveCity}}&nbsp;&nbsp;&nbsp;{{item.attributes.leaveAirport}}
 								hr.half-rule
-								p {{item.attributes.arrCity}} {{item.attributes.arrAirport}}
+								p {{item.attributes.arrCity}}&nbsp;&nbsp;&nbsp;{{item.attributes.arrAirport}}
 							td.text-center
-								p {{item.attributes.economyFare}}
+								input.levelRadio(type="radio",name="level",value="economy",style="margin-top:25px")
+								p ¥{{item.attributes.economyFare}}
 								hr.half-rule
 								p 剩余{{item.attributes.economyCount}}张
+								div(style="clear:both")
 							td.text-center
-								p {{item.attributes.businessFare}}
+								input.levelRadio(type="radio",name="level",value="business",style="margin-top:25px")
+								p ¥{{item.attributes.businessFare}}
 								hr.half-rule
 								p 剩余{{item.attributes.businessCount}}张
 							td.text-center
-								p {{item.attributes.firstFare}}
+								input.levelRadio(type="radio",name="level",value="first",style="margin-top:25px")
+								p ¥{{item.attributes.firstFare}}
 								hr.half-rule
 								p 剩余{{item.attributes.firstCount}}张
 							td.text-center(style="vertical-align:middle")
-								a(target="_blank", href="/ticketDetail/3")
-									button.btn.btn-outline.del(type="button", data-id="{{item.attributes._id}}") 订票
+								a(target="_blank", ng-click="newOrder(item.attributes._id)", href="")
+									button.btn.btn-outline.del(type="button") 订票
 			nav.text-center
 				ul.pagination
 					//- li(ng-class="{disabled:pages[0]==1}")

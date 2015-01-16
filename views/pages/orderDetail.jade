@@ -1,0 +1,84 @@
+//-继承通用模块
+extends ../layout
+
+block javascript
+	script(src="../js/orderDetail.js")
+
+block css
+	link(href="../css/newOrder.css", rel="stylesheet")
+
+block content
+	div.container(ng-controller="orderDetailCtrl",style="margin-top:30px;")
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title #{order.flightId.leaveCity} - #{order.flightId.arrCity}
+					span(style="float:right;font-size:20px;") ¥#{order.fare}
+			div.panel-body
+				table.table.table-hover.table-bordered
+					tbody
+						tr
+							td.text-center
+								p #{order.flightId.company}
+								p #{order.flightId.flightNumber}
+							td.text-center
+								p <span style="margin-right:15px;">起飞</span> #{order.flightId.leaveDate} #{order.flightId.leaveTime} #{order.flightId.leaveAirport}
+								hr.full-rule
+								p <span style="margin-right:15px;">到达</span> #{order.flightId.arrDate} #{order.flightId.arrTime} #{order.flightId.arrAirport}
+							td.text-center
+								p #{level}
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title 乘客信息 <span style="font-size:10px;margin-left:10px;">请准确填写乘机人信息，以免在办理登机时发生问题。</span>
+			div.panel-body
+				form.form-horizontal
+					.form-group
+						label.col-sm-2.control-label 乘客姓名
+						.col-md-4
+							p.form-control-static #{order.passengerInfo.name}
+					.form-group
+						label.col-sm-2.control-label 证件类型
+						.col-md-4
+							p.form-control-static #{order.passengerInfo.identity.type} : #{order.passengerInfo.identity.number}
+					.form-group
+						label.col-sm-2.control-label 证件签发地
+						.col-sm-4
+							p.form-control-static #{order.passengerInfo.identity.place}
+					.form-group
+						label.col-sm-2.control-label 国籍
+						.col-sm-4
+							p.form-control-static #{order.passengerInfo.country}
+					.form-group
+						label.col-sm-2.control-label 乘客类型
+						case order.passengerInfo.ageLevel
+							when 'adult'
+								p.form-control-static 成人
+							when 'child'
+								p.form-control-static 儿童
+							default
+								p.form-control-static 成人
+					.form-group
+						label.col-sm-2.control-label 性别
+						case order.passengerInfo.sex
+							when 'male'
+								p.form-control-static 男
+							when 'female'
+								p.form-control-static 女
+							default
+								p.form-control-static 男
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title 联系人信息 <span style="font-size:10px;margin-left:10px;">请准确填写联系人信息，以便我们与您联系。</span>
+			div.panel-body
+				form.form-horizontal
+					.form-group
+						label.col-sm-2.control-label 姓名
+						.col-md-4
+							p.form-control-static #{order.contactInfo.name}
+					.form-group
+						label.col-sm-2.control-label 手机号码
+						.col-sm-4
+							p.form-control-static #{order.contactInfo.phoneNumber}
+					.form-group
+						label.col-sm-2.control-label 电子邮箱
+						.col-sm-4
+							p.form-control-static #{order.contactInfo.email}

@@ -14,6 +14,7 @@ var cookieParser = require('cookie-parser'); //如果要使用cookie，需要显
 var Helper = require('./helper.js')
 //包含Database.Query&Database.Object
 var Database = require('./database/databaseModule');
+var Models = require('./database/models/models');
 
 //连接本地数据库airplaneTickets
 mongoose.connect('mongodb://localhost/airplaneTickets');
@@ -62,8 +63,6 @@ function getRenderData(req){
 
 
 // 编写路由
-
-// index page
 app.get('/',function(req, res) {	
 	var data = getRenderData(req);
 	data.title = '机票查询';
@@ -116,6 +115,179 @@ app.get('/ticketManage',Helper.adminAuth,function(req, res) {
 	res.render('ticketManage', data);
 });
 
+app.get('/newOrder',Helper.requiredAuthentication, function(req,res){
+	var id = req.query.flightId;
+	var level = req.query.flightLevel;
+	if(id==undefined||level==undefined||id=="undefined"||level=="undefined"){
+		res.status(404).send("404 not found");
+		return ;
+	}
+	var data = getRenderData(req);
+	data.title = '新建订单';
+	var query = new Database.Query("Flight");
+	query.get(id,{
+		success:function(result){
+			if(!result||!result.attributes){
+				res.status(404).send("404 not found");
+				return ;
+			}
+			if(level == 'business'){
+				data.level = '商务舱';
+				data.fare = result.attributes.businessFare;
+			}
+			else if(level == 'economy'){
+				data.level = '经济舱';
+				data.fare = result.attributes.economyFare;
+			}
+			else if(level == 'first'){
+				data.level = '头等舱';
+				data.fare = result.attributes.firstFare;
+			}
+			data.flight = result.attributes;
+			res.render('newOrder', data);
+		},error:function(err){
+			res.status(404).send(err);
+			res.end();
+		}
+	})
+});
+
+app.get('/orderDetail/:orderId',Helper.requiredAuthentication, function(req,res){
+	var id = req.params.orderId;
+	var data = getRenderData(req);
+	data.title = '订单详情';
+	var OrderForm = Models.getClass("OrderForm");
+	OrderForm.findOne({_id:id})
+	.populate("flightId")
+	.exec(function(err,order){
+		if(order.level == 'business'){
+			data.level = '商务舱';
+		}
+		else if(order.level == 'economy'){
+			data.level = '经济舱';
+		}
+		else if(order.level == 'first'){
+			data.level = '头等舱';
+		}
+		data.order = order;
+		res.render('orderDetail',data);
+	});
+});
+
+app.get('/orderList/',Helper.requiredAuthentication, function(req,res){
+	var data = getRenderData(req);
+	data.title = '历史订单';
+
+	var OrderForm = Models.getClass("OrderForm");
+	OrderForm.find({userId:req.session.user._id})
+	.populate("flightId")
+	.limit(15)
+	.sort('-meta.updateAt')
+	.exec(function(err,list){
+		data.orderList = list;
+		res.render('orderList',data);
+	});
+});
+
+
+
+/******前端请求ajax******/
+
+app.get('/user/delOrder/:id',Helper.requiredAuthentication,function(req,res){
+	var id = req.params.id;
+	var object = new Database.Object("OrderForm", {_id:id});
+	object.delete({
+		success:function(_obj){
+			// res.redirect("/orderList?success=true");
+			res.send("true");
+			return;
+		},error:function(error){
+			// res.redirect("/orderList?success=false");
+			res.send("false");
+			return ;
+		}
+	});
+});
+
+app.post('/newOrder/:flightId/:flightLevel',Helper.requiredAuthentication,function(req,res){
+	var flightId = req.params.flightId;
+	var flightLevel = req.params.flightLevel;
+	var data = JSON.parse(req.body.data)
+	var passengerInfo = data.passengerInfo;
+	var contactInfo = data.contactInfo;
+	var fare = data.fare;
+	var date = new Date();
+	var minutes = date.getMinutes();
+	if(minutes<10)minutes = '0'+minutes;
+	var hours = date.getHours();
+	if(hours<10)hours = '0'+hours;
+	date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+hours+":"+minutes;
+	var object = new Database.Object("OrderForm", {
+		orderDate:     date, //订购日期
+		flightId:      flightId, //航班id
+		userId:        req.session.user._id, //用户id
+		level:         flightLevel, //舱位等级 first business economy
+		fare:          fare,
+		passengerInfo: passengerInfo, //乘客信息
+		contactInfo:   contactInfo  //联系信息
+	});
+	var query = new Database.Query("Flight");
+	query.get(flightId,{
+		success:function(flight){
+			var toBeSave={};
+			toBeSave._id = flight.attributes._id;
+			if(flightLevel == 'business'){
+				if(flight.attributes.businessCount<0){
+					res.status(404).send("sorry, there is no tickets left");
+					return ;
+				} else {
+					flight.attributes.businessCount-=1;
+				}
+				toBeSave.businessCount = flight.attributes.businessCount;
+			}
+			else if(flightLevel == 'economy'){
+				if(flight.attributes.economyCount<0){
+					res.status(404).send("sorry, there is no tickets left");
+					return ;
+				} else {
+					flight.attributes.economyCount-=1;
+				}
+				toBeSave.economyCount = flight.attributes.economyCount;
+			}
+			else if(flightLevel == 'first'){
+				if(flight.attributes.firstCount<0){
+					res.status(404).send("sorry, there is no tickets left");
+					return ;
+				} else {
+					flight.attributes.firstCount-=1;
+				}
+				toBeSave.firstCount = flight.attributes.firstCount;
+			}
+			flight = new Database.Object(flight.className);
+			flight.save(toBeSave,{
+				success:function(newone){
+					object.save(null,{
+						success:function(_obj){
+							res.send(_obj);
+							res.end();
+						},error:function(error){
+							res.status(404).send(error);
+							res.end();
+						}
+					});
+				},error:function(error){
+					res.status(404).send(error);
+					res.end();
+				}
+			});
+		},error:function(error){
+			res.status(404).send(error);
+			res.end();
+		}
+	})
+	
+});
+
 app.post('/admin/modify/:id',Helper.adminAuth,function(req,res){
 	var id = req.params.id;
 	var obj = req.body;
@@ -137,7 +309,6 @@ app.post('/admin/modify/:id',Helper.adminAuth,function(req,res){
 
 //登录
 app.post('/login',function(req,res){
-	// console.log(req.originalUrl);
 	Helper.authenticate(req.body.username,req.body.password,function(err,user){
 		 if (user) {
             req.session.regenerate(function () {
