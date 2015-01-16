@@ -16,29 +16,49 @@ block content
 			if orderList.length==0
 				p.text-center(style="margin:130px 0;") 你还没有订过单哦~
 			each order in orderList
-				table.table.table-hover.table-bordered(style="margin-bottom:40px;")
-					tbody
-						tr
-							td.text-center.vertical-center
-								p #{order.orderDate}
-							td.text-center.vertical-center
-								p #{order.flightId.company}
-								p #{order.flightId.flightNumber}
-							td.text-center.vertical-center
-								p <span style="margin-right:15px;">起飞</span> #{order.flightId.leaveDate} #{order.flightId.leaveTime} #{order.flightId.leaveAirport}
-								hr.full-rule
-								p <span style="margin-right:15px;">到达</span> #{order.flightId.arrDate} #{order.flightId.arrTime} #{order.flightId.arrAirport}
-							td.text-center.vertical-center
-								case order.level
-									when 'first'
-										p 头等舱
-									when 'business'
-										p 商务舱
-									when 'economy'
-										p 经济舱
-							td.text-center.vertical-center
-								a(target="_blank", ng-click="", href="/orderDetail/#{order._id}")
-									button.btn.btn-outline.del(type="button") 查看
-							td.text-center.vertical-center
-								a(ng-click="", href="")
-									button.btn.btn-outline.del(type="button",ng-click="delOrder('#{order._id}')") 删除
+				if order.flightId
+					table.table.table-hover.table-bordered(style="margin-bottom:40px;")
+						tbody
+							tr
+								td.text-center.vertical-center
+									p #{order.orderDate}
+								td.text-center.vertical-center
+									p #{order.flightId.company}
+									p #{order.flightId.flightNumber}
+								td.text-center.vertical-center
+									p <span style="margin-right:15px;">起飞</span> #{order.flightId.leaveDate} #{order.flightId.leaveTime} #{order.flightId.leaveAirport}
+									hr.full-rule
+									p <span style="margin-right:15px;">到达</span> #{order.flightId.arrDate} #{order.flightId.arrTime} #{order.flightId.arrAirport}
+								td.text-center.vertical-center
+									case order.level
+										when 'first'
+											p 头等舱
+										when 'business'
+											p 商务舱
+										when 'economy'
+											p 经济舱
+								td.text-center.vertical-center
+									a(target="_blank", ng-click="", href="/orderDetail/#{order._id}")
+										button.btn.btn-outline.del(type="button") 查看
+								td.text-center.vertical-center
+									a(ng-click="", href="")
+										button.btn.btn-outline.del(type="button",ng-click="delOrder('#{order._id}')") 删除
+				else
+					table.table.table-hover.table-bordered(style="margin-bottom:40px;")
+						tbody
+							tr
+								td.text-center.vertical-center
+									p #{order.orderDate}
+								td.text-center.vertical-center
+									p 该航班已被管理员删除,无法查看
+								td.text-center.vertical-center
+									case order.level
+										when 'first'
+											p 头等舱
+										when 'business'
+											p 商务舱
+										when 'economy'
+											p 经济舱
+								td.text-center.vertical-center
+									a(ng-click="", href="")
+										button.btn.btn-outline.del(type="button",ng-click="delOrder('#{order._id}')") 删除

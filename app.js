@@ -160,6 +160,10 @@ app.get('/orderDetail/:orderId',Helper.requiredAuthentication, function(req,res)
 	OrderForm.findOne({_id:id})
 	.populate("flightId")
 	.exec(function(err,order){
+		if(err||order==null){
+			res.status(404).send('404 not found');
+			return ;
+		}
 		if(order.level == 'business'){
 			data.level = '商务舱';
 		}

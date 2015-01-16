@@ -104,10 +104,17 @@ function($scope, Util, Database) {
 		// arrCity = $("#arrCity").select2("data").text;
 		leaveCity = $("#leaveCity").val();
 		arrCity = $("#arrCity").val();
+		leaveCity = $.trim(leaveCity);
+		arrCity = $.trim(arrCity);
 
 		var startDate = $("#startDatepicker").datepicker('getDate');
-		if(startDate&&leaveDate!="Invalid Date")
-			leaveDate = startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate();
+		if(startDate&&leaveDate!="Invalid Date"){
+			var month = startDate.getMonth()+1;
+			var day = startDate.getDate();
+			if(Number(day)<10)day = '0' + day;
+			if(Number(month)<10)month='0' + month;
+			leaveDate = startDate.getFullYear()+"-"+month+"-"+day;
+		}
 		if(leaveDate=='NaN-NaN-NaN')leaveDate=null;
 		// alert("出发地:"+leaveCity+"  目的地:"+arrCity+"  出发时间:"+leaveDate);
 		$scope.curPage = 1;
