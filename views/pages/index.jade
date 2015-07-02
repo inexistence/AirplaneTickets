@@ -31,6 +31,11 @@ block content
 							input#arrCity.form-control(placeholder="目的地")
 					.row.form-group
 						.col-xs-6
+							input#company.form-control(placeholder="航班公司")
+						.col-xs-6
+							input#flightNumber.form-control(placeholder="航班号")
+					.row.form-group
+						.col-xs-6
 							//- label.col-sm-2.control-label 出发时间
 							#startDatepicker.input-group.input-append.date.datepicker(data-date="",data-date-format="yyyy-mm-dd")
 								input.span2.form-control(size="16",placeholder="出发时间",type="text",value="",readonly="")
@@ -42,6 +47,12 @@ block content
 								input.span2.form-control(size="16",placeholder="到达时间",type="text",value="",readonly="")
 								span.add-on.input-group-addon
 									i.glyphicon.glyphicon-calendar
+						.col-xs-6
+							#sortOrder.select2-container.select-box(placeholder="排序")
+							input.orderLevel(type="radio",name="sortLevel",value="asc",style="margin-top:25px",checked=true)
+							span 升序
+							input.orderLevel(type="radio",name="sortLevel",value="des",style="margin-top:25px")
+							span 降序
 				.col-xs-6.col-md-4
 					a.btn.btn-outline(id="search",ng-click="search()") 查询
 		.container
@@ -87,7 +98,7 @@ block content
 								hr.half-rule
 								p 剩余{{item.attributes.firstCount}}张
 							td.text-center(style="vertical-align:middle")
-								a(target="_blank", ng-click="newOrder(item.attributes._id)", href="")
+								a(target="_blank", ng-click="newOrder(item.attributes._id,item.attributes)", href="")
 									button.btn.btn-outline.del(type="button") 订票
 			nav.text-center
 				ul.pagination
@@ -97,13 +108,21 @@ block content
 					//- 	a(href="#") <
 					//- li(ng-if="flights.length>0&&!pages[0]==1")
 						a(href="#") <<
-					li(ng-if="flights.length>0&&!activePage[0]")
-						a(href="#",ng-click="queryByPage(curPage-1)") <
+					li
+						span 共{{pageNum}}页
+					li
+						a(href="#",ng-click="queryByPage(1)") 首页
+					//- li(ng-if="flights.length>0&&!activePage[0]")
+					//- 	a(href="#",ng-click="queryByPage(curPage-1)") <
 
-					li(ng-repeat="page in pages",ng-class="{active: activePage[{{$index}}]}" )
+					li(id="page{{page}}",ng-repeat="page in pages" )
 						a(href="#",ng-click="queryByPage(pages[$index])") {{page}}
 
-					li(ng-if="flights.length>0&&!activePage[pageNum-1]")
-						a(href="#",ng-click="queryByPage(curPage+1)") >
-					li(ng-if="!true")
-						a(href="#") >>
+					//- li(ng-if="flights.length>0&&!activePage[pageNum-1]")
+					//- 	a(href="#",ng-click="queryByPage(curPage+1)") >
+					li
+						a(href="#",ng-click="queryByPage(pageNum)") 尾页
+					li
+						input#target-page.form-control(type="text",style="width:40px;display:inline;margin-left:10px")
+					li
+						button.btn.btn-primary(style="margin-left:10px",ng-click="jump2target()") 跳页

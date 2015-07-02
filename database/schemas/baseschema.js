@@ -30,9 +30,9 @@ BaseSchema.statics = {
 		}
 		return this
 		.find(q.equal)
+		.sort(q.sortCol)
 		.skip(q.skipNum)
 		.limit(q.limitNum)
-		.sort('-meta.updateAt')
 		.exec(cb);
 	},
 	findById: function(id, cb) {

@@ -52,24 +52,24 @@ block content
 					.form-group
 						label.col-sm-2.control-label(for="inputEconomyCount") 经济舱票数
 						.col-sm-4
-							input#inputEconomyCount.form-control(type="text", name="economyCount", value="#{flight.economyCount}")
+							input#inputEconomyCount.form-control(type="number", name="economyCount", value="#{flight.economyCount}")
 						label.col-sm-2.control-label(for="inputEconomyFare") 经济舱价格
 						.col-sm-4
-							input#inputEconomyFare.form-control(type="text", name="economyFare", value="#{flight.economyFare}")
+							input#inputEconomyFare.form-control(type="number", name="economyFare", value="#{flight.economyFare}")
 					.form-group
 						label.col-sm-2.control-label(for="inputBusinessCount") 商务舱票数
 						.col-sm-4
-							input#inputBusinessCount.form-control(type="text", name="businessCount", value="#{flight.businessCount}")
+							input#inputBusinessCount.form-control(type="number", name="businessCount", value="#{flight.businessCount}")
 						label.col-sm-2.control-label(for="inputBusinessFare") 商务舱价格
 						.col-sm-4
-							input#inputBusinessFare.form-control(type="text", name="businessFare", value="#{flight.businessFare}")
+							input#inputBusinessFare.form-control(type="number", name="businessFare", value="#{flight.businessFare}")
 					.form-group
 						label.col-sm-2.control-label(for="inputFirstCount") 头等舱票数
 						.col-sm-4
-							input#inputFirstCount.form-control(type="text", name="firstCount", value="#{flight.firstCount}")
+							input#inputFirstCount.form-control(type="number", name="firstCount", value="#{flight.firstCount}")
 						label.col-sm-2.control-label(for="inputFirstFare") 头等舱价格
 						.col-sm-4
-							input#inputFirstFare.form-control(type="text", name="firstFare", value="#{flight.firstFare}")
+							input#inputFirstFare.form-control(type="number", name="firstFare", value="#{flight.firstFare}")
 					.form-group
 						.col-sm-offset-1.col-sm-10
 							button.btn.btn-default(type="submit") 录入

@@ -8,6 +8,11 @@ function(win) {
 	    var r = win.location.search.substr(1).match(reg);
 	    if (r != null) return unescape(r[2]); return null;
     }
+    Util.emailOk = function(email){
+    	var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		if(reg.test(str))return true;
+		else return false;
+    }
 	return Util;
 }]);
 

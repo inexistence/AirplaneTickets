@@ -13,11 +13,11 @@ var FlightSchema = new mongoose.Schema(_.extend({
 		leaveCity:String,//出发城市
 		arrAirport:String,//到达机场
 		arrCity:String,//到达城市
-		businessFare:String,//商务舱价格
+		businessFare:Number,//商务舱价格
 		businessCount:Number,//商务舱票数
-		firstFare:String,//头等舱价格
+		firstFare:Number,//头等舱价格
 		firstCount:Number,//头等舱数量
-		economyFare:String,//经济舱价格
+		economyFare:Number,//经济舱价格
 		economyCount:Number,//经济舱数量		
 },BaseSchema.data));
 

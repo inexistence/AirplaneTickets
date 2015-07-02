@@ -38,6 +38,10 @@ function($scope, Util, Database) {
 			alert("请填写联系电话!");
 			return ;	
 		}
+		if($scope.contactInfo.email&&!Util.emailOk($scope.contactInfo.email)){
+			alert("电子邮件格式错误！");
+			return ;	
+		}
 		$scope.passengerInfo.name = $.trim($scope.passengerInfo.name);
 		$scope.contactInfo.phoneNumber = $.trim($scope.contactInfo.phoneNumber);
 		$scope.passengerInfo.name = $.trim($scope.passengerInfo.name);
@@ -70,8 +74,12 @@ function($scope, Util, Database) {
 			url: "/newOrder/"+flightId+"/"+flightLevel,
 			data: data,
 			success:function(data, status, headers, config) { 
+				if(data.error){
+					alert("提交订单失败！"+data.error);	
+					return ;
+				}
 				alert("提交成功！");
-				window.location.href = '/';
+				window.location.href = '/orderDetail/'+data.attributes._id;
 			},
 			error:function(data, status, headers, config){
 				alert("提交订单失败！");

@@ -8,12 +8,14 @@ Database.Query = function(className,query){
 	this.limitNum = 100;
 	this.skipNum = 0;
 	this.equal = {};
+	this.sortCol = '-meta.updateAt';
 	if(query){
 		this._id = query._id;
 		this.limitNum = query.limitNum;
 		this.skipNum = query.skipNum;
 		this.equal = query.equal;
 		this.className = query.className;
+		this.sortCol = query.sortCol;
 	}
 	this.equalTo = function(name,value){
 		this.equal[name] = value;
@@ -23,6 +25,9 @@ Database.Query = function(className,query){
 	};
 	this.skip = function(skip){
 		this.skipNum = skip;
+	};
+	this.sort = function(sort){
+		this.sortCol = sort;
 	};
 	this.find = function(callback){
 		var query = this;
@@ -104,7 +109,7 @@ Database.Object = function(className, obj){
 			this.attributes = _.extend(this.attributes,obj);
 		}
 		obj = this;
-		
+
 		var Class = Models.getClass(className);
 		if(Class===undefined){
 			if(callback&&callback.error)

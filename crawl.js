@@ -45,7 +45,7 @@ var saveProject = function($){
 		var dspace = $(this).attr("dspace");
 		var comp = $(this).attr("comp");
 
-		if(flyoffdate==undefined)flyoffdate="2015-01-16";
+		if(flyoffdate==undefined)flyoffdate="2015-07-03";
 
 		var flight ={};
 		flight.company = comp;
@@ -58,11 +58,11 @@ var saveProject = function($){
 		flight.leaveCity = offcity;
 		flight.arrAirport = arrport;
 		flight.arrCity = arrcity;
-		flight.economyCount = 100;
+		flight.economyCount = Math.ceil(Math.random()*100+1);
 		flight.economyFare = price;
 		flight.businessFare = Math.ceil(price*1.5);
-		flight.businessCount = 100;
-		flight.firstCount = 100;
+		flight.businessCount = Math.ceil(Math.random()*100+1);
+		flight.firstCount = Math.ceil(Math.random()*100+1);
 		flight.firstFare = price*2;
 
 		// console.log(flight);
@@ -79,7 +79,7 @@ var saveProject = function($){
 }
 
 //c1.txt c2.txt c3.txt c4.txt
-var filename = 'c4.txt';
+var filename = 'c1.txt';
 //读取文件
  fs.readFile('./crawlPage/'+filename,'utf8',function(err,data){
  	console.log("read "+filename);

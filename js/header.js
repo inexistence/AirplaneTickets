@@ -18,6 +18,7 @@ function($scope, Util, Database) {
 					$scope.$apply(function(){
 						$scope.user = data.user;	
 					})
+					window.location.href='/';
 					$("#login").modal('hide');
 				}
 				else if(data.error)
@@ -74,6 +75,7 @@ function($scope, Util, Database) {
 				$scope.$apply(function(){
 					$scope.user = null;	
 				})
+				window.location.href='/';
 			},
 			error:function(data, status, headers, config){
 			}

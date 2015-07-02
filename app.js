@@ -86,11 +86,11 @@ app.get('/ticketDetail/:id',Helper.adminAuth,function(req, res) {
 		leaveCity:"",//出发城市
 		arrAirport:"",//到达机场
 		arrCity:"",//到达城市
-		businessFare:"",//商务舱价格
+		businessFare:0,//商务舱价格
 		businessCount:"0",//商务舱票数
-		firstFare:"",//头等舱价格
+		firstFare:0,//头等舱价格
 		firstCount:"0",//头等舱数量
-		economyFare:"",//经济舱价格
+		economyFare:0,//经济舱价格
 		economyCount:"0",//经济舱数量		
 	}
 	if(id != "-1"){
@@ -241,8 +241,8 @@ app.post('/newOrder/:flightId/:flightLevel',Helper.requiredAuthentication,functi
 			var toBeSave={};
 			toBeSave._id = flight.attributes._id;
 			if(flightLevel == 'business'){
-				if(flight.attributes.businessCount<0){
-					res.status(404).send("sorry, there is no tickets left");
+				if(flight.attributes.businessCount<=0){
+					res.send({"error":"sorry, there is no tickets left"});
 					return ;
 				} else {
 					flight.attributes.businessCount-=1;
@@ -250,8 +250,8 @@ app.post('/newOrder/:flightId/:flightLevel',Helper.requiredAuthentication,functi
 				toBeSave.businessCount = flight.attributes.businessCount;
 			}
 			else if(flightLevel == 'economy'){
-				if(flight.attributes.economyCount<0){
-					res.status(404).send("sorry, there is no tickets left");
+				if(flight.attributes.economyCount<=0){
+					res.send({"error":"sorry, there is no tickets left"});
 					return ;
 				} else {
 					flight.attributes.economyCount-=1;
@@ -259,8 +259,8 @@ app.post('/newOrder/:flightId/:flightLevel',Helper.requiredAuthentication,functi
 				toBeSave.economyCount = flight.attributes.economyCount;
 			}
 			else if(flightLevel == 'first'){
-				if(flight.attributes.firstCount<0){
-					res.status(404).send("sorry, there is no tickets left");
+				if(flight.attributes.firstCount<=0){
+					res.send({"error":"sorry, there is no tickets left"});
 					return ;
 				} else {
 					flight.attributes.firstCount-=1;
@@ -296,6 +296,27 @@ app.post('/admin/modify/:id',Helper.adminAuth,function(req,res){
 	var id = req.params.id;
 	var obj = req.body;
 	if(id!="undefined")obj._id = id;
+	else id = -1;
+	if(obj.company==""||
+		obj.flightNumber==""||
+		obj.leaveDate==""||
+		obj.leaveTime==""||
+		obj.arrDate==""||
+		obj.arrTime==""||
+		obj.leaveCity==""||
+		obj.leaveAirport==""||
+		obj.arrCity==""||
+		obj.arrAirport==""||
+		obj.economyCount<0||
+		obj.economyFare<=0||
+		obj.businessCount<0||
+		obj.businessFare<=0||
+		obj.firstCount<0||
+		obj.firstFare<=0){
+		res.redirect("/ticketDetail/"+id+"?success=false&msg=information empty or number is less than 0!");
+		res.end();
+		return ;
+	}
 	var className = "Flight";
 	var object = new Database.Object(className, obj);
 	object.save(null,{
@@ -304,7 +325,7 @@ app.post('/admin/modify/:id',Helper.adminAuth,function(req,res){
 			res.end();
 			return;
 		},error:function(error){
-			res.redirect("/ticketDetail/"+_obj.attributes._id+"?success=false");
+			res.redirect("/ticketDetail/"+id+"?success=false");
 			res.end();
 			return ;
 		}

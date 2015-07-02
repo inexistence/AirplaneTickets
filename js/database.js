@@ -2,7 +2,7 @@
  * 前端的Database类
  * 包括Database.Query
  * 和Database.Object
- * 
+ *
  * 由于使用了jquery的ajax,
  * 故使用前需要引用jQuery
  ****************************/
@@ -26,7 +26,7 @@ Ajax.http = function(config,callback){
 		type:config.method,
 		url:config.url,
 		data:data,
-		success:function(data, status, headers, config) { 
+		success:function(data, status, headers, config) {
 			if(callback&&callback.success){
 				callback.success(data, status, headers, config);
 			}
@@ -68,6 +68,7 @@ Database.Query = function(className){
 	this.limitNum = 100;
 	this.skipNum = 0;
 	this.equal = {};
+	this.sortCol = '-meta.updateAt';
 	this.equalTo = function(name,value){
 		this.equal[name] = value;
 	};
@@ -77,6 +78,9 @@ Database.Query = function(className){
 	this.skip = function(skip){
 		this.skipNum = skip;
 	};
+	this.sort = function(sort){
+		this.sortCol = sort;
+	}
 	this.find = function(callback){
 		Ajax.get('/findData',this,{
 			success:function(results){

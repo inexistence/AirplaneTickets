@@ -5,6 +5,7 @@ function($scope, Util, Database) {
 	if(success=='true'){
 		alert('修改成功！');
 	}else if (success=='false'){
-		alert('修改失败！');
+		var msg = Util.getQueryString('msg');
+		alert('修改失败！'+msg);
 	}
 }]);
